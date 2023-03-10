@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Toyota Corolla",
+    "imageSrc": "https://www.toyota.com.sg/showroom/new-models/-/media/ed447ba065134487804a021681eab8e6.png",
+    "imageAlt": "Red Toyota Corolla",
+    "description": "Looking for a thrilling driving experience? Look no further than our stylish red Toyota Corolla rental! With its sleek design and smooth handling, this car is sure to turn heads wherever you go. And at just $150 per day, you won't find a better value for such a top-of-the-line vehicle. Whether you're cruising around town or hitting the open road, our Corolla rental will make your journey unforgettable. Book now and get ready to experience the ultimate driving adventure!",
+    "price": 150,
+    "color": "Red"
+  },
+  {
+    "id": 2,
+    "name": "Mercedes C300",
+    "imageSrc": "https://platform.cstatic-images.com/xlarge/in/v2/stock_photos/dd7d076e-45a9-45b2-ab1e-5ce7f3bbcb47/d3a852b8-302e-4b1b-9bbc-850afd719524.png",
+    "imageAlt": "Gray Mercedes C300",
+    "description": "Get ready to make a statement with our sophisticated gray Mercedes C300 rental! With its premium design and powerful engine, this car is the epitome of luxury. The spacious interior and advanced features will ensure that you ride in comfort and style. At $350 per day, this rental is worth every penny for those who want to make a lasting impression.",
+    "price": 350,
+    "color": "Gray"
+  },
+  {
+    "id": 3,
+    "name": "Volkswagen Beetle",
+    "imageSrc": "https://www.motortrend.com/uploads/sites/10/2018/11/2019-volkswagen-beetle-s-5door-hatchback-angular-front.png",
+    "imageAlt": "White Volkswagen Beetle",
+    "description": "Want to make your driving experience unique and fun? Look no further than our iconic white Volkswagen Beetle rental! This car is perfect for those who want to stand out from the crowd and enjoy a nostalgic driving experience. At $200 per day, you can cruise around town in style and turn heads wherever you go.",
+    "price": 200,
+    "color": "White"
+  },
+  {
+    "id": 4,
+    "name": "Porsche 911",
+    "imageSrc": "https://purepng.com/public/uploads/large/purepng.com-red-porsche-911-carrera-carcarvehicletransportporsche-961524669275lrfxn.png",
+    "imageAlt": "Red Porsche 911",
+    "description": "For those who crave speed and performance, our red Porsche 911 rental is the ultimate dream car! With its stunning design and powerful engine, this car will take your driving experience to the next level. Whether you're taking it for a spin on the open road or showing it off in the city, this rental is sure to impress. At $950 per day, it's a luxury rental that's worth every penny for those who demand the best.",
+    "price": 950,
+    "color": "Red"
+  }
+]
