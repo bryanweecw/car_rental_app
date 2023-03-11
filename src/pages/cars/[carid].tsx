@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -55,7 +56,6 @@ const Car = () => {
 
   return (
     <>
-      {" "}
       <div className="grid">
         <div
           key={car.id}
@@ -64,7 +64,7 @@ const Car = () => {
           <Link href="/" className="w-1/5  font-light text-slate-400">
             <button
               type="button"
-              className="mb-5 flex items-center rounded-md bg-white  py-2.5 px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              className="mb-5 flex items-center rounded-md bg-white  py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
               <svg width="24" height="24" viewBox="0 0 16 16">
                 <path
