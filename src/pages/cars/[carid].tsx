@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import cars from "../cars.json";
 import Datepicker from "react-tailwindcss-datepicker";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Car = () => {
   type CustomDateRange = {
@@ -59,7 +58,7 @@ const Car = () => {
       <div className="grid">
         <div
           key={car.id}
-          className="relative m-10 place-self-center rounded-xl border p-10 pt-5 custxs:w-5/6  custsm:w-5/6 custmd:w-5/6 custlg:w-5/6 custxl:w-2/3 cust2xl:w-2/3"
+          className="relative m-10 place-self-center rounded-xl border p-10 pt-5 shadow-lg custxs:w-5/6  custsm:w-5/6 custmd:w-5/6 custlg:w-5/6 custxl:w-2/3 cust2xl:w-2/3"
         >
           <Link href="/" className="w-1/5  font-light text-slate-400">
             <button
@@ -104,7 +103,6 @@ const Car = () => {
             <p className="text-md mb-3 font-medium">Select Booking Dates:</p>
             <Datepicker
               value={value}
-              inputClassName="border-2"
               toggleClassName="rounded-r-lg bg-opacity-40 bg-gray-400 hover:bg-blue-800 hover:bg-opacity-60 transition-all duration-150 ease-in-out"
               onChange={handleValueChange}
               minDate={yesterday}
@@ -131,18 +129,6 @@ const Car = () => {
           </button>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </>
   );
 };

@@ -8,6 +8,8 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import { useState } from "react";
 import type { Database } from "~/types/database-raw";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({
   Component,
@@ -20,6 +22,18 @@ function MyApp({
       initialSession={pageProps.initialSession}
     >
       <Component {...pageProps} />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </SessionContextProvider>
   );
 }
