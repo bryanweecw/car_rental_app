@@ -160,6 +160,7 @@ export default function Account() {
                 placeholder={person.dateofbirth.toLocaleDateString()}
                 asSingle={true}
                 displayFormat={"DD/MM/YYYY"}
+                readOnly={true}
               />
             </div>
             <button

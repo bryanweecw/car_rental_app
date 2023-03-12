@@ -107,6 +107,7 @@ const Car = () => {
               onChange={handleValueChange}
               minDate={yesterday}
               showShortcuts={false}
+              readOnly={true}
             />
           </div>
           {value.endDate != null && value.startDate != null ? (
