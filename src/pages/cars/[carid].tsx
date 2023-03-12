@@ -88,11 +88,11 @@ const Car = () => {
           </div>
           <div className="mt-4 flex justify-between">
             <div>
-              <h3 className="text-xl text-gray-700">{car.name}</h3>
+              <h3 className="text-xl text-gray-700">{car.vehicle_model} {" "} {car.vehicle_make}</h3>
               <p className="mt-1 text-lg text-gray-500">{car.color}</p>
             </div>
             <p className="text-xl font-medium text-gray-900">
-              ${car.price}/day
+              ${car.hire_rate}/day
             </p>
           </div>
           <div className="mt-5">
@@ -112,7 +112,7 @@ const Car = () => {
           {value.endDate != null && value.startDate != null ? (
             <>
               Total Cost: $
-              {getTotalPrice(value.startDate, value.endDate, car.price)}
+              {getTotalPrice(value.startDate, value.endDate, car.hire_rate)}
             </>
           ) : (
             <></>

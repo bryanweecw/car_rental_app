@@ -10,18 +10,34 @@ import Fuse from "fuse.js";
 
 const Home: NextPage = () => {
   interface carObject {
+    // id: number;
+    // name: string;
+    // imageSrc: string;
+    // imageAlt: string;
+    // description: string;
+    // price: number;
+    // color: string;
     id: number;
-    name: string;
+    vehicle_registration_number: string;
+    vehicle_model: string;
+    vehicle_make: string;
+    engine_size: string;
+    capacity: number;
+    milage: number;
+    MOT_test_date: string;
+    hire_rate: number;
+    outlet_id: number;
+    isRented: boolean;
+    isActive: boolean;
     imageSrc: string;
     imageAlt: string;
     description: string;
-    price: number;
     color: string;
   }
 
   const [query, setQuery] = useState("");
   const options = {
-    keys: ["name", "color", "price"],
+    keys: ["vehcile_make", "vehicle_model", "hire_rate"],
     includedScore: true,
   };
   const fuse = new Fuse(cars, options);
@@ -60,13 +76,15 @@ const Home: NextPage = () => {
                     <h3 className="text-sm text-gray-700">
                       <Link href={`/cars/${car.id}`}>
                         <span aria-hidden="true" className="absolute inset-0" />
-                        {car.name}
+                        {car.vehicle_make}
+                        {" "}
+                        {car.vehicle_model}
                       </Link>
                     </h3>
                     <p className="mt-1 text-sm text-gray-500">{car.color}</p>
                   </div>
                   <p className="text-sm font-medium text-gray-900">
-                    ${car.price}/day
+                    ${car.hire_rate}/day
                   </p>
                 </div>
               </div>
