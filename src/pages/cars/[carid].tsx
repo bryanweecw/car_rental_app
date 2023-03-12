@@ -1,10 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import cars from "../cars.json";
 import Datepicker from "react-tailwindcss-datepicker";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Car = () => {
   type CustomDateRange = {
@@ -55,16 +55,15 @@ const Car = () => {
 
   return (
     <>
-      {" "}
       <div className="grid">
         <div
           key={car.id}
-          className="relative m-10 place-self-center rounded-xl border p-10 pt-5 custxs:w-5/6  custsm:w-5/6 custmd:w-5/6 custlg:w-5/6 custxl:w-2/3 cust2xl:w-2/3"
+          className="relative m-10 place-self-center rounded-xl border p-10 pt-5 shadow-lg custxs:w-5/6  custsm:w-5/6 custmd:w-5/6 custlg:w-5/6 custxl:w-2/3 cust2xl:w-2/3"
         >
           <Link href="/" className="w-1/5  font-light text-slate-400">
             <button
               type="button"
-              className="mb-5 flex items-center rounded-md bg-white  py-2.5 px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              className="mb-5 flex items-center rounded-md bg-white  py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
               <svg width="24" height="24" viewBox="0 0 16 16">
                 <path
@@ -89,11 +88,11 @@ const Car = () => {
           </div>
           <div className="mt-4 flex justify-between">
             <div>
-              <h3 className="text-xl text-gray-700">{car.name}</h3>
+              <h3 className="text-xl text-gray-700">{car.vehicle_model} {" "} {car.vehicle_make}</h3>
               <p className="mt-1 text-lg text-gray-500">{car.color}</p>
             </div>
             <p className="text-xl font-medium text-gray-900">
-              ${car.price}/day
+              ${car.hire_rate}/day
             </p>
           </div>
           <div className="mt-5">
@@ -104,7 +103,6 @@ const Car = () => {
             <p className="text-md mb-3 font-medium">Select Booking Dates:</p>
             <Datepicker
               value={value}
-              inputClassName="border-2"
               toggleClassName="rounded-r-lg bg-opacity-40 bg-gray-400 hover:bg-blue-800 hover:bg-opacity-60 transition-all duration-150 ease-in-out"
               onChange={handleValueChange}
               minDate={yesterday}
@@ -114,7 +112,7 @@ const Car = () => {
           {value.endDate != null && value.startDate != null ? (
             <>
               Total Cost: $
-              {getTotalPrice(value.startDate, value.endDate, car.price)}
+              {getTotalPrice(value.startDate, value.endDate, car.hire_rate)}
             </>
           ) : (
             <></>
@@ -131,18 +129,6 @@ const Car = () => {
           </button>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </>
   );
 };

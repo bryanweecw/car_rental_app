@@ -1,0 +1,8 @@
+{
+  "NavBarLinks": {
+    "About": "/about",
+    "Contact": "/contact",
+    "Account": "/account",
+    "Login": "/login"
+  }
+}
