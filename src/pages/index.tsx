@@ -3,14 +3,35 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import cars from "./cars.json";
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "~/layout/navbar";
-import CarsSearchBar from "~/components/CarsSearchBar";
+import SearchBar from "~/components/SearchBar";
+import Fuse from "fuse.js";
 
 const Home: NextPage = () => {
+  interface carObject {
+    id: number;
+    name: string;
+    imageSrc: string;
+    imageAlt: string;
+    description: string;
+    price: number;
+    color: string;
+  }
+
+  const [query, setQuery] = useState("");
+  const options = {
+    keys: ["name", "color"],
+    includedScore: true,
+  };
+  const fuse = new Fuse(cars, options);
+  const results = fuse.search(query);
+  const carResult: carObject[] = query
+    ? results.map((result) => result.item)
+    : cars;
+
   return (
     <>
-    <CarsSearchBar apiData={cars}/>
       <Head>
         <title>SMILES Car Rental</title>
         <meta name="description" content="Rent Cars with a Smile" />
@@ -22,9 +43,10 @@ const Home: NextPage = () => {
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Cars Available
           </h2>
-
+          {/* <CarsSearchBar apiData={cars} /> */}
+          <SearchBar query={query} setQuery={setQuery} />
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {cars.map((car) => (
+            {carResult.map((car) => (
               <div key={car.id} className="group relative">
                 <div className="aspect-w-1 aspect-h-1 lg:aspect-none h-80 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
                   <img
