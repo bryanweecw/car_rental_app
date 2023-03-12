@@ -5,10 +5,12 @@ import Link from "next/link";
 import cars from "./cars.json";
 import React from "react";
 import Navbar from "~/layout/navbar";
+import CarsSearchBar from "~/components/CarsSearchBar";
 
 const Home: NextPage = () => {
   return (
     <>
+    <CarsSearchBar apiData={cars}/>
       <Head>
         <title>SMILES Car Rental</title>
         <meta name="description" content="Rent Cars with a Smile" />
