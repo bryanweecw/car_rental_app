@@ -37,7 +37,7 @@ const Home: NextPage = () => {
 
   const [query, setQuery] = useState("");
   const options = {
-    keys: ["vehcile_make", "vehicle_model", "hire_rate"],
+    keys: ["vehicle_make", "vehicle_model", "hire_rate"],
     includedScore: true,
   };
   const fuse = new Fuse(cars, options);
