@@ -17,7 +17,7 @@ export default function About() {
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20" />
         <div className="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center" />
       </div>
-      <div className="mx-auto max-w-5xl border-b bg-white/80 px-2 pb-10 pt-10 text-center shadow-md lg:max-w-6xl lg:px-5">
+      <div className="mx-auto max-w-5xl border-b bg-white/80 px-2 pb-10 pt-10 text-center (box-shadow: 0 4px 0px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1));lg:max-w-6xl lg:px-5">
         <h2 className="text-4xl font-bold tracking-tight text-black  sm:text-5xl">
           About Smiles
         </h2>
@@ -64,7 +64,7 @@ export default function About() {
           </p>
         </div>
       </div>
-      <div className="mx-auto max-w-5xl border-b bg-white/80 px-2 pb-10 pt-10 text-center shadow-md lg:max-w-6xl lg:px-5">
+      <div className="mx-auto max-w-5xl border-b bg-white/80 px-2 pb-10 pt-10 text-center (box-shadow: 0 4px 0px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)); lg:max-w-6xl lg:px-5">
         <h2 className="text-4xl font-bold tracking-tight text-black  sm:text-5xl">
           Real people, real stories
         </h2>

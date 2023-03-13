@@ -17,7 +17,7 @@ export default function TestimonyComponent({
   const { name, role, testimonial, org_image, testifier_image } =
     testimonyObject;
   return (
-    <section className="relative isolate overflow-hidden bg-transparent px-6 lg:px-8">
+    <section className="relative isolate overflow-hidden bg-transparent px-6 pb-12 lg:px-8">
       <div className="mx-auto max-w-lg lg:max-w-4xl">
         <img className="mx-auto h-4" src={org_image} alt="" />
         <figure className="mt-3">
