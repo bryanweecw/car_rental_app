@@ -66,7 +66,7 @@ export default function About() {
       </div>
       <div className="mx-auto max-w-5xl border-b bg-white/80 px-2 pb-10 pt-10 text-center (box-shadow: 0 4px 0px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)); lg:max-w-6xl lg:px-5">
         <h2 className="text-4xl font-bold tracking-tight text-black  sm:text-5xl">
-          Real people, real stories
+          Real People, Real Stories
         </h2>
         <p className="leading-2 text-md mt-3 px-5 text-center font-extralight tracking-tight text-gray-800">
           At Smiles Rental, we are committed to providing you with the best car
