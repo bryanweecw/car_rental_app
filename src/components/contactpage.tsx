@@ -115,6 +115,7 @@ export default function ContactPage() {
                   name="country"
                   className="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
                 >
+                  <option>SG</option>
                   <option>US</option>
                   <option>CA</option>
                   <option>EU</option>
@@ -173,7 +174,7 @@ export default function ContactPage() {
               .
             </Switch.Label>
           </Switch.Group>
-          <a href="https://www.privacypolicies.com/live/fc2eaae8-ad04-4c2c-ab5e-012f3f698741" target="_blank" className="z-40 font-semibold text-indigo-600">
+          <a href="https://www.privacypolicies.com/live/fc2eaae8-ad04-4c2c-ab5e-012f3f698741" target="_blank" className="z-40 font-md text-indigo-600 text-sm">
                 Our privacy&nbsp;policy
               </a>
         </div>
