@@ -3,7 +3,7 @@
     "name": "Sarah Patel",
     "role": "Marketing Manager at Acme Inc.",
     "testimonial": "I needed a reliable car rental service for a business trip, and these guys delivered. The process was simple, the rates were competitive, and the car was in great condition. Highly recommended!",
-    "org_image": "https://example.com/acme.png",
+    "org_image": "",
     "testifier_image": "https://images.unsplash.com/photo-1620316544823-f5254f5bbff9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
   },
   {
@@ -17,42 +17,42 @@
     "name": "Jonathan Wu",
     "role": "Small Business Owner",
     "testimonial": "I needed a car for a last-minute business trip, and these guys were able to provide one for me on short notice. The rates were reasonable and the customer service was excellent. I'll definitely be using this company again!",
-    "org_image": "https://example.com/jwenterprises.png",
+    "org_image": "",
     "testifier_image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
   },
   {
     "name": "Maria Rodriguez",
     "role": "Travel Blogger",
     "testimonial": "Renting a car was the best decision I made during my trip to the city. It gave me the freedom to explore at my own pace and see all the sights I wanted to see. The staff at this company were helpful and friendly, and the car was in great condition.",
-    "org_image": "https://example.com/tourismco.png",
+    "org_image": "",
     "testifier_image": "https://images.unsplash.com/photo-1531078215167-91fcfe45b39e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2425&q=80"
   },
   {
     "name": "David Jones",
     "role": "Software Engineer",
     "testimonial": "I rented a car for a weekend getaway with my girlfriend, and it was a great experience. The car was clean and well-maintained, and the rental process was easy and hassle-free. I would definitely rent from this company again.",
-    "org_image": "https://example.com/softwareco.png",
+    "org_image": "",
     "testifier_image": "https://images.unsplash.com/photo-1625504615927-c14f4f309b63?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1065&q=80"
   },
   {
     "name": "Jennifer Lee",
     "role": "Freelance Writer",
     "testimonial": "I needed a car for a few days to attend some out-of-town meetings, and this company was able to provide one for me at a reasonable rate. The staff were friendly and professional, and the car was comfortable and reliable.",
-    "org_image": "https://example.com/freelanceco.png",
+    "org_image": "",
     "testifier_image": "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
   },
   {
     "name": "Tom Chang",
     "role": "Real Estate Agent",
     "testimonial": "I rented a car for a weekend open house event, and it was a great decision. The car was spacious enough to transport all my materials, and it was in great condition. The staff were helpful and made the rental process easy.",
-    "org_image": "https://example.com/realestateco.png",
+    "org_image": "",
     "testifier_image": "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80"
   },
   {
     "name": "Emily Chen",
     "role": "Graduate Student",
     "testimonial": "I needed a car for a research trip, and this company was able to provide one for me at a great rate. The car was clean and comfortable, and the staff were helpful and accommodating. I would definitely rent from them again.",
-    "org_image": "https://example.com/university.png",
+    "org_image": "",
     "testifier_image": "https://images.unsplash.com/photo-1561856118-7f786cd9215e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
   }
 ]
