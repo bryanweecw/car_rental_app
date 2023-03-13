@@ -10,7 +10,8 @@ export default function AccountButton() {
   };
   const session = useSession();
 
-  if (session) {
+  if(router.pathname != "/login"){
+  if (session ) {
     return (
       <>
         <Navlabel text="Account" />
@@ -38,4 +39,5 @@ export default function AccountButton() {
       </button>
     );
   }
+}
 }
