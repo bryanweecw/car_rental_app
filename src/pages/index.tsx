@@ -8,7 +8,7 @@ import Navbar from "~/layout/navbar";
 import SearchBar from "~/components/SearchBar";
 import Fuse from "fuse.js";
 
-const cars_available = cars.filter((cars) => cars.isRented == false);
+const cars_available = cars.filter((cars) => cars.isActive == true);
 
 const Home: NextPage = () => {
   interface carObject {
