@@ -39,5 +39,7 @@ export default function AccountButton() {
       </button>
     );
   }
+} else{
+  return <></>
 }
 }
