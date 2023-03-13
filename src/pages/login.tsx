@@ -4,6 +4,9 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Head from "next/head";
+import Navbar from "~/layout/navbar";
+
 
 const Home = () => {
   const session = useSession();
@@ -16,6 +19,13 @@ const Home = () => {
   }
 
   return (
+    <>
+    <Head>
+      <title>SMILES Car Rental</title>
+      <meta name="description" content="Rent Cars with a Smile" />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+    <Navbar />
     <div className="pt-20">
       <div className="grid w-full">
         <div className="relative w-3/5 place-self-center rounded-lg  border p-10 custxs:w-4/5 custxl:w-2/5 cust2xl:w-2/5">
@@ -52,6 +62,7 @@ const Home = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

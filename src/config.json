@@ -1,5 +1,6 @@
 {
   "NavBarLinks": {
+    "Home": "/",
     "About": "/about",
     "Contact": "/contact",
     "Account": "/account",

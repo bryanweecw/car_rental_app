@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import cars from "../cars.json";
 import Datepicker from "react-tailwindcss-datepicker";
 import { toast } from "react-toastify";
+import { useSession } from "@supabase/auth-helpers-react";
 
 const Car = () => {
   type CustomDateRange = {
@@ -15,6 +16,8 @@ const Car = () => {
     startDate: string;
     endDate: string | null;
   };
+  const session = useSession();
+
   const router = useRouter();
   const { carid } = router.query;
   const car = cars.find((car) => car.id.toString() === carid);
@@ -27,8 +30,10 @@ const Car = () => {
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
-
-  const notify = () => toast("Booking successful!");
+  
+  const notify = () => {if(session != null) {
+                        toast("Booking successful!");
+                        } else {toast("Please log in or create an account!")}}
 
   const handleValueChange = (newValue: UnformattedDateRange) => {
     const formattedValue: CustomDateRange = {
