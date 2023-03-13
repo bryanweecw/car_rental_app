@@ -39,6 +39,7 @@ const Home: NextPage = () => {
   const options = {
     keys: ["vehicle_make", "vehicle_model", "hire_rate"],
     includedScore: true,
+    threshold: 0.4,
   };
   const fuse = new Fuse(cars, options);
   const results = fuse.search(query);
