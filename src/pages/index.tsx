@@ -8,6 +8,8 @@ import Navbar from "~/layout/navbar";
 import SearchBar from "~/components/SearchBar";
 import Fuse from "fuse.js";
 
+const cars_available = cars.filter((cars) => cars.isRented == false);
+
 const Home: NextPage = () => {
   interface carObject {
     // id: number;
@@ -41,11 +43,11 @@ const Home: NextPage = () => {
     includedScore: true,
     threshold: 0.35,
   };
-  const fuse = new Fuse(cars, options);
+  const fuse = new Fuse(cars_available, options);
   const results = fuse.search(query);
   const carResult: carObject[] = query
     ? results.map((result) => result.item)
-    : cars;
+    : cars_available;
 
   return (
     <>
