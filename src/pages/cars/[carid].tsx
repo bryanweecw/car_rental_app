@@ -31,9 +31,13 @@ const Car = () => {
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
-  const notify = () => {if(session != null) {
-                        toast("Booking successful!");
-                        } else {toast("Please log in or create an account!")}}
+  const notify = () => {
+    if (session != null) {
+      toast("Booking successful!");
+    } else {
+      toast("Please log in or create an account!");
+    }
+  };
 
   const handleValueChange = (newValue: UnformattedDateRange) => {
     const formattedValue: CustomDateRange = {
@@ -43,7 +47,6 @@ const Car = () => {
           ? new Date(newValue.endDate)
           : new Date(newValue.startDate),
     };
-    console.log("newValue:", newValue);
     setValue(formattedValue);
   };
 
@@ -93,10 +96,16 @@ const Car = () => {
           </div>
           <div className="mt-4 flex justify-between">
             <div>
-              <h3 className="text-xl text-gray-700">{car.vehicle_make} {" "} {car.vehicle_model}</h3>
+              <h3 className="text-xl text-gray-700">
+                {car.vehicle_make} {car.vehicle_model}
+              </h3>
               <p className="mt-1 text-lg text-gray-500">{car.color}</p>
-              <p className="mt-1 text-lg text-gray-700">Milage: {car.milage} Km</p>
-              <p className="mt-1 text-lg text-gray-700">Capacity: {car.capacity} People</p>
+              <p className="mt-1 text-lg text-gray-700">
+                Milage: {car.milage} Km
+              </p>
+              <p className="mt-1 text-lg text-gray-700">
+                Capacity: {car.capacity} People
+              </p>
             </div>
             <p className="text-xl font-medium text-gray-900">
               ${car.hire_rate}/day

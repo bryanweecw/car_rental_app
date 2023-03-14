@@ -26,7 +26,6 @@ export default function Account() {
   });
 
   const handleValueChange = (newDOBValue: CustomDateRange) => {
-    console.log("newDOBValue:", newDOBValue);
     setDOBValue(newDOBValue);
   };
 
