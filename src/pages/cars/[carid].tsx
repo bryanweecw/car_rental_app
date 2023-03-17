@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import React, { CSSProperties, useState } from "react";
+import React, { type CSSProperties, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { toast } from "react-toastify";
 import { useSession } from "@supabase/auth-helpers-react";
@@ -29,28 +31,26 @@ interface CarType {
   description: string;
 } //declare type to be used in getStaticProps
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<{ carid: string }>
-  // this is the type of the params object, which is inferred from the file name, in this case `pages/cars/[carid].tsx`, so it's `{ carid: string }`
-  // this allows us to make sure that the `id` is a string and query the database with it
-) {
-  const ssg = createProxySSGHelpers({
-    router: vehicleInfoQueryRouter,
-    ctx: {},
-    transformer: superjson,
-  });
-  // this is used to prefetch data on the server-side, ssg is short for server-side generation, you can read more about it here: https://trpc.io/docs/ssg
-  // we can use supabase queries directly, but we use trpc to make it easier to use and to make it easier to add more queries in the future if we need to
-  // additionally, using trpc allows us to use the same queries on the client-side, so we don't have to write the same queries twice
-  const id = context.params?.carid as string;
-  // prefetch `post.byId`
-  await ssg.getVehicleInfo.prefetch({ text: id });
+export async function getStaticProps(context: { params: { carid: string } }) {
+  const id = context.params?.carid;
+
+  // Fetch data from Supabase
+  const { data, error } = await supabaseClient
+    .from("vehicle")
+    .select()
+    .eq("id", parseInt(id))
+    .single();
+
+  if (error) {
+    console.error(error);
+    return { props: { vehicle: null } };
+  }
+
   return {
     props: {
-      trpcState: ssg.dehydrate(),
-      id,
+      vehicle: data,
     },
-    revalidate: 60, //this sets the revalidation time to 60 seconds, so the page will be regenerated every 60 seconds
+    revalidate: 60,
   };
 }
 
@@ -63,7 +63,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   if (error) {
     console.error(error);
-    return { paths: [], fallback: "blocking" };
+    return { paths: [], fallback: false };
     //this is the fallback option, if there is an error, we will return an empty array of paths and fallback to blocking
     //blocking means that the page will be generated on the server-side, so the user will have to wait for the page to be generated
     //you can read more about fallback here: https://nextjs.org/docs/basic-features/data-fetching#the-fallback-key-required
@@ -77,7 +77,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: "blocking",
+    fallback: false,
   };
 };
 
@@ -136,36 +136,37 @@ const Car = (
     return totalPrice;
   }
 
-  const { id } = props;
+  // const { id } = props;
 
-  const postQuery = api.vehicleInfoQuery.getVehicleInfo.useQuery({
-    text: id,
-  });
-  if (postQuery.status !== "success") {
-    // won't happen since we're using `fallback: "blocking"`
-    // but while loading, we can show a loading indicator
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="mx-auto">
-          <ClipLoader
-            color={color}
-            loading={loading}
-            size={150}
-            cssOverride={override}
-          />
-        </div>
-      </div>
-    );
-  }
+  // const postQuery = api.vehicleInfoQuery.getVehicleInfo.useQuery({
+  //   text: id,
+  // });
+  // if (postQuery.status !== "success") {
+  //   // won't happen since we're using `fallback: "blocking"`
+  //   // but while loading, we can show a loading indicator
+  //   return (
+  //     <div className="flex h-screen items-center justify-center">
+  //       <div className="mx-auto">
+  //         <ClipLoader
+  //           color={color}
+  //           loading={loading}
+  //           size={150}
+  //           cssOverride={override}
+  //         />
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  // console.log;
 
-  const { data } = postQuery;
-  const car = data as unknown as CarType[];
+  // const { data } = postQuery;
+  // const car = data as unknown as CarType[];
   //no choice lol
   //we have to cast the data to the CarType array, because the data is an array of objects, and we want to access the first element of the array, which is an object
   //but we need to cast it to unknown first, because the data may be undefined, and we can't cast undefined to an array
   //this is very sus, but it works
 
-  if (!car[0]) {
+  if (!props.vehicle) {
     return <p>Car not found</p>;
   }
 
@@ -173,7 +174,7 @@ const Car = (
     <>
       <div className="grid">
         <div
-          key={car[0].id}
+          key={props.vehicle.id}
           className="relative m-10 place-self-center rounded-xl border p-10 pt-5 shadow-lg custxs:w-5/6  custsm:w-5/6 custmd:w-5/6 custlg:w-5/6 custxl:w-2/3 cust2xl:w-2/3"
         >
           <Link href="/" className="w-1/5  font-light text-slate-400">
@@ -197,31 +198,33 @@ const Car = (
 
           <div className="aspect-w-1 aspect-h-1 lg:aspect-none min-h-80 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
             <img
-              src={car[0].imagesrc}
-              alt={car[0].imagealt}
+              src={props.vehicle.imagesrc ? props.vehicle.imagesrc : ""}
+              alt={props.vehicle.imagealt ? props.vehicle.imagealt : ""}
               className="h-full w-full object-contain object-center lg:h-full lg:w-full"
             />
           </div>
           <div className="mt-4 flex justify-between">
             <div>
               <h3 className="text-xl text-gray-700">
-                {car[0].vehicle_make} {car[0].vehicle_model}
+                {props.vehicle.vehicle_make} {props.vehicle.vehicle_model}
               </h3>
-              <p className="mt-1 text-lg text-gray-500">{car[0].color}</p>
-              <p className="mt-1 text-lg text-gray-700">
-                Mileage: {car[0].mileage} Km
+              <p className="mt-1 text-lg text-gray-500">
+                {props.vehicle.color}
               </p>
               <p className="mt-1 text-lg text-gray-700">
-                Capacity: {car[0].capacity} People
+                Mileage: {props.vehicle.mileage} Km
+              </p>
+              <p className="mt-1 text-lg text-gray-700">
+                Capacity: {props.vehicle.capacity} People
               </p>
             </div>
             <p className="text-xl font-medium text-gray-900">
-              ${car[0].hire_rate}/day
+              ${props.vehicle.hire_rate}/day
             </p>
           </div>
           <div className="mt-5">
             <span className="text-md font-medium">Description</span>
-            <p className="text-sm">{car[0].description}</p>
+            <p className="text-sm">{props.vehicle.description}</p>
           </div>
           <div className="my-5">
             <p className="text-md mb-3 font-medium">Select Booking Dates:</p>
@@ -236,7 +239,11 @@ const Car = (
           {value.endDate != null && value.startDate != null ? (
             <>
               Total Cost: $
-              {getTotalPrice(value.startDate, value.endDate, car[0].hire_rate)}
+              {getTotalPrice(
+                value.startDate,
+                value.endDate,
+                props.vehicle.hire_rate ? props.vehicle.hire_rate : 0
+              )}
             </>
           ) : (
             <></>
