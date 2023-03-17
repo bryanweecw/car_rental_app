@@ -13,10 +13,10 @@ export const vehicleQueryRouter = createTRPCRouter({
   hello: publicProcedure.query(async () => {
     const { data, error } = await supabaseClient.from("vehicle").select();
     if (error) {
-      console.log(error);
+      // console.log(error);
       return error;
     } else {
-      console.log("data retrieved:", data);
+      // console.log("data retrieved:", data);
       return data;
     }
   }),
