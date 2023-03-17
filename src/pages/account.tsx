@@ -73,7 +73,7 @@ export default function Account() {
                   id="dropzone-file"
                   type="file"
                   className="hidden"
-                  onChange={(e) => {
+                  onChange={() => {
                     console.log("Updated Photo");
                   }}
                 />
