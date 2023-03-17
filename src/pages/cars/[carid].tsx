@@ -21,7 +21,7 @@ interface CarType {
   vehicle_make: string;
   vehicle_model: string;
   color: string;
-  milage: number;
+  mileage: number;
   capacity: number;
   hire_rate: number;
   imagesrc: string;
@@ -209,7 +209,7 @@ const Car = (
               </h3>
               <p className="mt-1 text-lg text-gray-500">{car[0].color}</p>
               <p className="mt-1 text-lg text-gray-700">
-                Milage: {car[0].milage} Km
+                Mileage: {car[0].mileage} Km
               </p>
               <p className="mt-1 text-lg text-gray-700">
                 Capacity: {car[0].capacity} People
