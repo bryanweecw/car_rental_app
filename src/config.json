@@ -4,6 +4,7 @@
     "About": "/about",
     "Contact": "/contact",
     "Account": "/account",
-    "Login": "/login"
+    "Login": "/login",
+    "Dashboard": "/staffdashboard"
   }
 }

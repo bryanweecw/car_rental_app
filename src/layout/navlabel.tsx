@@ -4,7 +4,7 @@ import Link from "next/link";
 import config from "~/config.json";
 
 interface NavlabelProps {
-  text: "Home" | "About" | "Contact" | "Login" | "Account";
+  text: "Home" | "About" | "Contact" | "Login" | "Account" | "Dashboard";
 }
 
 export default function Navlabel({ text }: NavlabelProps) {
