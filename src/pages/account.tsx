@@ -2,6 +2,9 @@ import { useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import { supabaseClient } from "../server/sharedinstance";
+import { useSession } from 'next-auth/client';
+
 
 /* eslint-disable @next/next/no-img-element */
 export default function Account() {
@@ -9,6 +12,9 @@ export default function Account() {
     startDate: Date | null;
     endDate: Date | null;
   };
+
+  const [session, loading] = useSession();
+  const userId = session?.user?.id;
 
   const person = {
     name: "John Doe",
@@ -26,11 +32,23 @@ export default function Account() {
   });
 
   const handleValueChange = (newDOBValue: CustomDateRange) => {
-    console.log("newDOBValue:", newDOBValue);
     setDOBValue(newDOBValue);
   };
 
-  const notify = () => toast("Changes saved!");
+  const notify = async () => {
+    const { data, error } = await supabaseClient
+      .from("profiles")
+      .update({ first_name:name, address: address, phone_number:phoneNumber})
+      .eq("userId", "user_uid");
+
+    if (error) {
+      console.error(error);
+    } else {
+      console.log(data);
+      toast("Changes saved!");
+    }
+  };
+
 
   const [name, setName] = useState(person.name);
   const [phoneNumber, setPhoneNumber] = useState(person.phonenumber);
@@ -74,7 +92,7 @@ export default function Account() {
                   id="dropzone-file"
                   type="file"
                   className="hidden"
-                  onChange={(e) => {
+                  onChange={() => {
                     console.log("Updated Photo");
                   }}
                 />
