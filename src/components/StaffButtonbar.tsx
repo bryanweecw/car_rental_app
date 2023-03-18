@@ -11,39 +11,31 @@ export default function StaffButtonBar() {
     await supabase.auth.signOut(); // Sign the user out
   };
 
-  const session = useSession();
   const [isStaff, setIsStaff] = useState(false);
+  const session = useSession();
 
   useEffect(() => {
-    function checkIfStaff() {
+    async function checkIfStaff() {
       try {
-        supabase
+        const { data: profile_info } = await supabase
           .from("profiles")
           .select("isstaff")
-          .eq("user_uid", session?.user?.id)
-          .then(({ data: profile_info, error }) => {
-            if (profile_info?.[0]?.isstaff) {
-              setIsStaff(true);
-              console.log("isStaff", isStaff);
-            } else {
-              setIsStaff(false);
-              console.log("isStaff", isStaff);
-            }
-          });
+          .eq("user_uid", session?.user?.id);
+        const isStaff = Boolean(profile_info?.[0]?.isstaff);
+        setIsStaff(isStaff);
       } catch (error) {
-        setIsStaff(false);
+        console.error(error);
       }
     }
-    checkIfStaff();
+    if (session && session.user && session.user.id) {
+      void checkIfStaff();
+    }
+    console.log("useEffect was run");
   }, [session]);
 
-  if (router.pathname != "/login" && session && isStaff) {
-    return (
-      <>
-        <Navlabel text="Dashboard" />
-      </>
-    );
-  } else {
+  if (router.pathname == "/login" || !isStaff || !session) {
     return null;
+  } else {
+    return <Navlabel text="Dashboard" />;
   }
 }
