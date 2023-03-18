@@ -8,6 +8,7 @@ export default function AccountButton() {
 
   const handleLogoutClick = async () => {
     await supabase.auth.signOut(); // Sign the user out
+    void router.push("/");
   };
   const session = useSession();
 
