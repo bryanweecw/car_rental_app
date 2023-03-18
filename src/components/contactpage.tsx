@@ -23,8 +23,9 @@ export default function ContactPage() {
   const [errorState, setErrorState] = useState(false);
   const { mutate, isLoading } = api.contactMutation.sendContactForm.useMutation(
     {
-      onSuccess: () => {
+      onSuccess: (res) => {
         setRes(true);
+        console.log(res);
       },
       onError: (err) => {
         console.log(err);

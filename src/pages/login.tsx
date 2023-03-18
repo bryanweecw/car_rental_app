@@ -12,56 +12,66 @@ const Home = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
 
-  if (session) {
+  if (session && session.user && session.user.id) {
+    void supabase
+      .from("profiles")
+      .select("isstaff")
+      .eq("user_uid", session.user.id)
+      .then(({ data, error }) => {
+        if (data && data[0]?.isstaff) {
+          console.log("is staff");
+        } else {
+          console.log("is not staff", error);
+        }
+      });
     void router.push("/");
     return null; // Return null to prevent rendering the rest of the component
-  }
-
-  return (
-    <>
-      <Head>
-        <title>SMILES Car Rental</title>
-        <meta name="description" content="Rent Cars with a Smile" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="pt-20">
-        <div className="grid w-full">
-          <div className="relative w-3/5 place-self-center rounded-lg  border p-10 custxs:w-4/5 custxl:w-2/5 cust2xl:w-2/5">
-            <div className="">
-              <Link
-                href="/"
-                className="relative w-1/5  font-light text-slate-400"
-              >
-                <button
-                  type="button"
-                  className="mb-5 flex items-center rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+  } else {
+    return (
+      <>
+        <Head>
+          <title>SMILES Car Rental</title>
+          <meta name="description" content="Rent Cars with a Smile" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <div className="pt-20">
+          <div className="grid w-full">
+            <div className="relative w-3/5 place-self-center rounded-lg  border p-10 custxs:w-4/5 custxl:w-2/5 cust2xl:w-2/5">
+              <div className="">
+                <Link
+                  href="/"
+                  className="relative w-1/5  font-light text-slate-400"
                 >
-                  <svg width="24" height="24" viewBox="0 0 16 16">
-                    <path
-                      d="M9 4 L5 8 L9 12"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linejoin="round"
-                      stroke-linecap="round"
-                    />
-                  </svg>
-                  Back
-                </button>
-              </Link>
-              <Image src="/logo.png" alt="" width={500} height={500} />
-              <Auth
-                supabaseClient={supabase}
-                appearance={{ theme: ThemeSupa }}
-                providers={[]}
-                theme="light"
-              />
+                  <button
+                    type="button"
+                    className="mb-5 flex items-center rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  >
+                    <svg width="24" height="24" viewBox="0 0 16 16">
+                      <path
+                        d="M9 4 L5 8 L9 12"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    Back
+                  </button>
+                </Link>
+                <Image src="/logo.png" alt="" width={500} height={500} />
+                <Auth
+                  supabaseClient={supabase}
+                  appearance={{ theme: ThemeSupa }}
+                  providers={[]}
+                  theme="light"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 };
-
 export default Home;

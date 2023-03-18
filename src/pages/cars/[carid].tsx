@@ -27,6 +27,7 @@ interface CarType {
   imagesrc: string;
   imagealt: string;
   description: string;
+  vehicle_registration_number: string;
 } //declare type to be used in getStaticProps
 
 export async function getStaticProps(
@@ -50,7 +51,7 @@ export async function getStaticProps(
       trpcState: ssg.dehydrate(),
       id,
     },
-    revalidate: 60, //this sets the revalidation time to 60 seconds, so the page will be regenerated every 60 seconds
+    revalidate: 3600, //this sets the revalidation time to 60 seconds, so the page will be regenerated every 60 seconds
   };
 }
 
@@ -81,9 +82,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-const Car = (
+export default function Car(
   props: InferGetStaticPropsType<typeof getStaticProps> & { car: CarType }
-) => {
+) {
   type CustomDateRange = {
     startDate: Date;
     endDate: Date | null;
@@ -110,11 +111,37 @@ const Car = (
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
+  const { mutate, isLoading } =
+    api.hireAgreementCreationMutation.HireAgreementCreation.useMutation({
+      onSuccess: (res) => {
+        console.log(res);
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    });
+
   const notify = () => {
-    if (session != null) {
+    if (
+      session != null &&
+      value.endDate != null &&
+      value.startDate != null &&
+      car[0]
+    ) {
+      const dataObject = {
+        vehicle_registration_number: car[0].vehicle_registration_number,
+        client_uid: session.user.id,
+        date_start: value.startDate.toISOString().substring(0, 10),
+        date_end: value.endDate.toISOString().substring(0, 10),
+        amount: getTotalPrice(value.startDate, value.endDate, car[0].hire_rate),
+      };
+      mutate(dataObject);
+      console.log(dataObject);
       toast("Booking successful!");
-    } else {
+    } else if (session == null) {
       toast("Please log in or create an account!");
+    } else {
+      toast("Please select a date range!");
     }
   };
 
@@ -231,6 +258,17 @@ const Car = (
               onChange={handleValueChange}
               minDate={yesterday}
               showShortcuts={false}
+              disabledDates={[
+                {
+                  startDate: "2023-02-02",
+                  endDate: "2023-02-05",
+                },
+                {
+                  startDate: "2024-02-13",
+                  endDate: "2024-12-15",
+                },
+              ]}
+              //abstract out disabledDates later
             />
           </div>
           {value.endDate != null && value.startDate != null ? (
@@ -255,6 +293,4 @@ const Car = (
       </div>
     </>
   );
-};
-
-export default Car;
+}

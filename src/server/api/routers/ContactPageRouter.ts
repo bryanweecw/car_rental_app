@@ -24,19 +24,22 @@ export const contactMutationRouter = createTRPCRouter({
     .input(contactFormDataSchema)
     .mutation(async ({ input }) => {
       const now = new Date().toISOString();
-      const { data, error } = await supabaseClient.from("contact_page").insert({
-        created_at: now.toString(),
-        email: input.email,
-        first_name: input.first_name,
-        last_name: input.last_name,
-        company: input.company,
-        phone_number: input.phone_number,
-        message: input.message,
-      });
+      const { data, error } = await supabaseClient
+        .from("contact_page")
+        .insert({
+          created_at: now.toString(),
+          email: input.email,
+          first_name: input.first_name,
+          last_name: input.last_name,
+          company: input.company,
+          phone_number: input.phone_number,
+          message: input.message,
+        })
+        .select("*");
       if (error) {
         // console.log(error);
       } else {
-        // console.log("Contact form submitted successfully:", data);
+        console.log("Contact form submitted successfully:", data);
       }
       return data;
     }),

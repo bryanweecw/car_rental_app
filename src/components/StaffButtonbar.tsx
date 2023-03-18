@@ -7,9 +7,6 @@ import Navlabel from "~/layout/navlabel";
 export default function StaffButtonBar() {
   const supabase = useSupabaseClient();
   const router = useRouter();
-  const handleLogoutClick = async () => {
-    await supabase.auth.signOut(); // Sign the user out
-  };
 
   const [isStaff, setIsStaff] = useState(false);
   const session = useSession();
@@ -21,8 +18,8 @@ export default function StaffButtonBar() {
           .from("profiles")
           .select("isstaff")
           .eq("user_uid", session?.user?.id);
-        const isStaff = Boolean(profile_info?.[0]?.isstaff);
-        setIsStaff(isStaff);
+        const isStaffLocal = Boolean(profile_info?.[0]?.isstaff);
+        setIsStaff(isStaffLocal);
       } catch (error) {
         console.error(error);
       }
@@ -30,12 +27,11 @@ export default function StaffButtonBar() {
     if (session && session.user && session.user.id) {
       void checkIfStaff();
     }
-    console.log("useEffect was run");
-  }, [session]);
+  }, [session, supabase]);
 
-  if (router.pathname == "/login" || !isStaff || !session) {
-    return null;
-  } else {
+  if (router.pathname != "/login" && isStaff && session) {
     return <Navlabel text="Dashboard" />;
+  } else {
+    return null;
   }
 }
