@@ -3,6 +3,9 @@ import { exampleRouter } from "~/server/api/routers/example";
 import { vehicleQueryRouter } from "~/server/api/routers/vehicleQueryRouter";
 import { contactMutationRouter } from "./routers/ContactPageRouter";
 import { vehicleInfoQueryRouter } from "./routers/vehicleInfoQueryRouter";
+import { createHireAgreementRouter } from "./routers/CreateHireAgreementRouter";
+import { retrieveAllHireAgreementsRouter } from "./routers/retrieveAllHireAgreementsRouter";
+import { HireAgreementInfoQueryRouter } from "./routers/hireAgreementInfoQueryRouter";
 
 /**
  * This is the primary router for your server.
@@ -14,6 +17,9 @@ export const appRouter = createTRPCRouter({
   vehicleQuery: vehicleQueryRouter,
   vehicleInfoQuery: vehicleInfoQueryRouter,
   contactMutation: contactMutationRouter,
+  hireAgreementCreationMutation: createHireAgreementRouter,
+  RetrieveAllHireAgreements: retrieveAllHireAgreementsRouter,
+  HireAgreementInfoQuery: HireAgreementInfoQueryRouter,
 });
 
 // export type definition of API

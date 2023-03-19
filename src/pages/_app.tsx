@@ -10,6 +10,9 @@ import { useState } from "react";
 import type { Database } from "~/types/database-raw";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "~/layout/navbar";
+
+import StaffTabContextWrapper from "~/context/StaffTabContext";
 
 function MyApp({
   Component,
@@ -21,19 +24,22 @@ function MyApp({
       supabaseClient={supabase}
       initialSession={pageProps.initialSession}
     >
-      <Component {...pageProps} />
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <StaffTabContextWrapper>
+        <Navbar />
+        <Component {...pageProps} />
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </StaffTabContextWrapper>
     </SessionContextProvider>
   );
 }
