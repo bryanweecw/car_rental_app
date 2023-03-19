@@ -1,29 +1,17 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import Navbar from "~/layout/navbar";
 
 const Home = () => {
-  const session = useSession();
   const supabase = useSupabaseClient();
   const router = useRouter();
+  const user = useUser();
 
-  if (session && session.user && session.user.id) {
-    void supabase
-      .from("profiles")
-      .select("isstaff")
-      .eq("user_uid", session.user.id)
-      .then(({ data, error }) => {
-        if (data && data[0]?.isstaff) {
-          console.log("is staff");
-        } else {
-          console.log("is not staff", error);
-        }
-      });
+  if (user) {
     void router.push("/");
     return null; // Return null to prevent rendering the rest of the component
   } else {

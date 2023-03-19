@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import React, { CSSProperties, useState } from "react";
+import React, { type CSSProperties, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { toast } from "react-toastify";
 import { useSession } from "@supabase/auth-helpers-react";

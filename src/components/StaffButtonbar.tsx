@@ -1,7 +1,9 @@
-import { ChevronDoubleLeftIcon } from "@heroicons/react/20/solid";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import {
+  useSessionContext,
+  useSupabaseClient,
+} from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Navlabel from "~/layout/navlabel";
 
 export default function StaffButtonBar() {
@@ -9,25 +11,30 @@ export default function StaffButtonBar() {
   const router = useRouter();
 
   const [isStaff, setIsStaff] = useState(false);
-  const session = useSession();
+  const { session, isLoading } = useSessionContext();
 
-  useEffect(() => {
-    async function checkIfStaff() {
-      try {
-        const { data: profile_info } = await supabase
-          .from("profiles")
-          .select("isstaff")
-          .eq("user_uid", session?.user?.id);
-        const isStaffLocal = Boolean(profile_info?.[0]?.isstaff);
-        setIsStaff(isStaffLocal);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    if (session && session.user && session.user.id) {
-      void checkIfStaff();
+  const checkIfStaff = useCallback(async () => {
+    try {
+      const { user } = session ?? {};
+      const { id } = user ?? {};
+      const { data: profile_info } = await supabase
+        .from("profiles")
+        .select("isstaff")
+        .eq("user_uid", id);
+      const isStaffLocal = Boolean(profile_info?.[0]?.isstaff);
+      setIsStaff(isStaffLocal);
+    } catch (error) {
+      console.error(error);
     }
   }, [session, supabase]);
+  // useCallback is used to prevent the function from being recreated every time in the useEffect
+  // instead, it's only recreated when the dependencies change
+
+  useEffect(() => {
+    if (!isLoading && session) {
+      void checkIfStaff();
+    }
+  }, [checkIfStaff, isLoading, session, supabase]);
 
   if (router.pathname != "/login" && isStaff && session) {
     return <Navlabel text="Dashboard" />;
