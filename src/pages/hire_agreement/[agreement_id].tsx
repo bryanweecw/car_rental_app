@@ -7,6 +7,7 @@ import {
 import { useRouter } from "next/router";
 import { type CSSProperties, useCallback, useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
+import StaffHireAgreementView from "~/components/StaffHireAgreementView";
 import { api } from "~/utils/api";
 
 interface CarType {
@@ -53,6 +54,7 @@ export default function Agreement() {
   const router = useRouter();
   const { agreement_id } = router.query;
   const [isStaff, setIsStaff] = useState(false);
+  const [formData, setFormData] = useState({});
 
   const checkIfStaff = useCallback(async () => {
     try {
@@ -73,6 +75,7 @@ export default function Agreement() {
       console.error(error);
     }
   }, [session, supabase]);
+  const isEditable = true;
 
   //check if user is staff or if user is owner of agreement
   //if not, redirect to home page
@@ -107,7 +110,6 @@ export default function Agreement() {
     } else if (postQuery.status == "success") {
       const { data } = postQuery;
       const infoData = data as unknown as AgreementInfo[];
-      console.log(infoData);
       if (Object.keys(infoData).length == 0 || infoData[0] == null) {
         void router.push("/404");
       } else {
@@ -120,7 +122,7 @@ export default function Agreement() {
         ) {
           const selectedCar = infoData[0].vehicle;
           return (
-            <>
+            <div className="mx-auto max-w-2xl py-8 px-4 sm:py-12 sm:px-6 lg:max-w-7xl lg:px-8">
               <div className="mx-auto border p-10">
                 YOU PICKED
                 <div className="aspect-w-1 aspect-h-1 lg:aspect-none min-h-80 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
@@ -150,50 +152,64 @@ export default function Agreement() {
                   </p>
                 </div>
                 <div className="mt-5">
-                  <span className="text-md font-medium">Description</span>
+                  <div className="text-md font-medium">Description</div>
                   <p className="text-sm">{selectedCar.description}</p>
                 </div>
               </div>
-              <div className="mx-auto border p-10">
-                YOUR HIRE AGREEMENT DETAILS:
-                <div className="grid grid-cols-2">
-                  <div className="mt-5">
-                    <span className="text-md font-medium">Agreement ID</span>
-                    <p className="text-sm">{infoData[0].hire_agreement_id}</p>
-                  </div>
-                  <div className="mt-5">
-                    <span className="text-md font-medium">Start Date</span>
-                    <p className="text-sm">{infoData[0].date_start}</p>
-                  </div>
-                  <div className="mt-5">
-                    <span className="text-md font-medium">End Date</span>
-                    <p className="text-sm">{infoData[0].date_end}</p>
-                  </div>
-                  <div className="mt-5">
-                    <span className="text-md font-medium">Rental Cost</span>
-                    <p className="text-sm">${infoData[0].rental_cost}</p>
-                  </div>
-                  <div className="mt-5">
-                    <span className="text-md font-medium">Transaction ID</span>
-                    <p className="text-sm">{infoData[0].transaction_id}</p>
-                  </div>
-                  <div className="mt-5">
-                    <span className="text-md font-medium">Staff Name</span>
-                    <p className="text-sm">
-                      {infoData[0].staff.profiles.first_name}{" "}
-                      {infoData[0].staff.profiles.last_name}
-                    </p>
-                  </div>
-                  <div className="mt-5">
-                    <span className="text-md font-medium">Client Name</span>
-                    <p className="text-sm">
-                      {infoData[0].client.profiles.first_name}{" "}
-                      {infoData[0].client.profiles.last_name}
-                    </p>
+              {isStaff ? (
+                <StaffHireAgreementView agreementData={infoData[0]} />
+              ) : (
+                <div className="mx-auto border p-10">
+                  YOUR HIRE AGREEMENT DETAILS:
+                  <div className="grid grid-cols-2">
+                    <div className="mt-5">
+                      <span className="text-md font-medium">Agreement ID</span>
+                      <p className="text-sm">{infoData[0].hire_agreement_id}</p>
+                    </div>
+                    <div className="mt-5">
+                      <span className="text-md font-medium">Start Date</span>
+                      <p className="text-sm">{infoData[0].date_start}</p>
+                    </div>
+                    <div className="mt-5">
+                      <span className="text-md font-medium">End Date</span>
+                      <p className="text-sm">{infoData[0].date_end}</p>
+                    </div>
+                    <div className="mt-5">
+                      <span className="text-md font-medium">Rental Cost</span>
+                      <p className="text-sm">${infoData[0].rental_cost}</p>
+                    </div>
+                    <div className="mt-5">
+                      <span className="text-md font-medium">
+                        Transaction ID
+                      </span>
+                      <p className="text-sm">{infoData[0].transaction_id}</p>
+                    </div>
+                    <div className="mt-5">
+                      <span className="text-md font-medium">
+                        Vehicle Registration Number
+                      </span>
+                      <p className="text-sm">
+                        {infoData[0].vehicle_registration_number}
+                      </p>
+                    </div>
+                    <div className="mt-5">
+                      <span className="text-md font-medium">Staff Name</span>
+                      <p className="text-sm">
+                        {infoData[0].staff.profiles.first_name}{" "}
+                        {infoData[0].staff.profiles.last_name}
+                      </p>
+                    </div>
+                    <div className="mt-5">
+                      <span className="text-md font-medium">Client Name</span>
+                      <p className="text-sm">
+                        {infoData[0].client.profiles.first_name}{" "}
+                        {infoData[0].client.profiles.last_name}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </>
+              )}
+            </div>
           );
         }
       }
