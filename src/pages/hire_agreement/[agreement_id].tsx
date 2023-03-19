@@ -22,6 +22,7 @@ interface CarType {
   imagealt: string;
   description: string;
   vehicle_registration_number: string;
+  outlet_id: number;
 }
 
 type AgreementInfo = {
