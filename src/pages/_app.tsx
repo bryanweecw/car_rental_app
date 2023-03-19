@@ -6,10 +6,11 @@ import {
 } from "@supabase/auth-helpers-react";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import type { Database } from "~/types/database-raw";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "~/layout/navbar";
 
 function MyApp({
   Component,
@@ -21,6 +22,7 @@ function MyApp({
       supabaseClient={supabase}
       initialSession={pageProps.initialSession}
     >
+      <Navbar />
       <Component {...pageProps} />
       <ToastContainer
         position="top-center"
