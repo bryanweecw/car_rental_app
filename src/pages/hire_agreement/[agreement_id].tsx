@@ -55,7 +55,6 @@ export default function Agreement() {
   const router = useRouter();
   const { agreement_id } = router.query;
   const [isStaff, setIsStaff] = useState(false);
-  const [formData, setFormData] = useState({});
 
   const checkIfStaff = useCallback(async () => {
     try {
@@ -76,7 +75,6 @@ export default function Agreement() {
       console.error(error);
     }
   }, [session, supabase]);
-  const isEditable = true;
 
   //check if user is staff or if user is owner of agreement
   //if not, redirect to home page
@@ -93,7 +91,9 @@ export default function Agreement() {
   const postQuery = api.HireAgreementInfoQuery.getHireAgreementInfo.useQuery({
     text: agreement_id ? agreement_id.toString() : "",
   });
-
+  const handleAgreementChange = () => {
+    void postQuery.refetch();
+  };
   if (user) {
     if (postQuery.status == "loading") {
       return (
@@ -158,7 +158,10 @@ export default function Agreement() {
                 </div>
               </div>
               {isStaff ? (
-                <StaffHireAgreementView agreementData={infoData[0]} />
+                <StaffHireAgreementView
+                  onAgreementChange={handleAgreementChange}
+                  agreementData={infoData[0]}
+                />
               ) : (
                 <div className="mx-auto border p-10">
                   YOUR HIRE AGREEMENT DETAILS:
