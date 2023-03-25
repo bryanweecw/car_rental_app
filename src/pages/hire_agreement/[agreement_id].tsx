@@ -77,14 +77,17 @@ export default function Agreement() {
   }, [session, supabase]);
 
   //check if user is staff or if user is owner of agreement
+
   //if not, redirect to home page
   useEffect(() => {
     if (!isLoading && !session) {
-      void router.push("/");
-    } else {
-      // if the user is logged in, or if we don't know if they are logged in
-      // because it is still loading check if they are staff
-      void checkIfStaff();
+      if (!session) {
+        void router.push("/");
+      } else {
+        // if the user is logged in, or if we don't know if they are logged in
+        // because it is still loading check if they are staff
+        void checkIfStaff();
+      }
     }
   }, [session, isLoading, supabase, router, checkIfStaff]);
 
@@ -215,10 +218,12 @@ export default function Agreement() {
               )}
             </div>
           );
+        } else {
+          void router.push("/");
+          console.log("reached");
+          return <></>;
         }
       }
-    } else {
-      return <></>;
     }
   }
 }

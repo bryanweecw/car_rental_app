@@ -1,74 +1,55 @@
+import { useSessionContext } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import { api } from "~/utils/api";
 
-const people = [
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  // More people...
-];
-type Client = {
-  profiles: {
-    first_name: string;
-    last_name: string;
+interface HiredDates {
+  date_start: string;
+  date_end: string;
+} //integrate later
+
+interface ResultType {
+  outlet: {
+    vehicle: CarType[];
   };
-};
+}
 
-type HireAgreement = {
-  client: Client;
-  client_uid: string | null;
-  date_end: string | null;
-  date_start: string | null;
-  hire_agreement_id: number;
-  rental_cost: number | null;
-  staff_uid: string | null;
-  transaction_id: number | null;
-  vehicle_registration_number: string | null;
-};
+interface CarType {
+  id: number;
+  vehicle_make: string;
+  vehicle_model: string;
+  color: string;
+  mileage: number;
+  capacity: number;
+  hire_rate: number;
+  imagesrc: string;
+  imagealt: string;
+  description: string;
+  isactive: boolean;
+  vehicle_registration_number: string;
+}
 
-interface HATProps {
+interface FATProps {
   id: string;
 }
 
-export default function HireAgreementTable({ id }: HATProps) {
+export default function FleetManagementTable({ id }: FATProps) {
   const { data } =
-    api.RetrieveAllHireAgreements.RetrieveAllHireAgreements.useQuery({
+    api.RetrieveAllOutletVehicles.RetrieveAllOutletVehicles.useQuery({
       text: id,
     });
   console.log(data);
 
-  function getPeriodStatus(datestart: string, dateend: string) {
-    if (datestart == "" || dateend == "") {
-      return "Invalid Booking";
-    }
-    const today = new Date();
-    const start = new Date(datestart);
-    const end = new Date(dateend);
-
-    if (today < start) {
-      return "Upcoming";
-    } else if (today > end) {
-      return "Completed";
-    } else {
-      return "Active";
-    }
-  }
-
-  const hireAgreements = data as HireAgreement[];
+  const outletVehicles = (data as ResultType[])?.[0]?.outlet?.vehicle ?? [];
 
   return (
     <div className="rounded-md border py-10 px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Hire Agreements
+            Fleet Management
           </h1>
           <p className="mt-2 text-sm text-gray-700">
-            A list of all the hire agreements assigned to you including the
-            client name, car registration number, booking period and status.
+            A list of all the vehicles in your outlet.
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -90,25 +71,25 @@ export default function HireAgreementTable({ id }: HATProps) {
                     scope="col"
                     className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8"
                   >
-                    Hire Agreement ID
+                    Vehicle ID
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Client Name
+                    Vehicle Model
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Vehicle Make
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
                     Car Registration Number
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Booking Period
                   </th>
                   <th
                     scope="col"
@@ -125,38 +106,30 @@ export default function HireAgreementTable({ id }: HATProps) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {hireAgreements?.map((agreement) => (
-                  <tr key={agreement.hire_agreement_id}>
+                {outletVehicles?.map((vehicle) => (
+                  <tr key={vehicle.id}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-                      {agreement.hire_agreement_id}
+                      {vehicle.id}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {agreement.client.profiles.first_name}{" "}
-                      {agreement.client.profiles.last_name}
+                      {vehicle.vehicle_make}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {agreement.vehicle_registration_number}
+                      {vehicle.vehicle_model}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {`${
-                        agreement.date_start ? agreement.date_start : "N.A."
-                      } - ${agreement.date_end ? agreement.date_end : "N.A."}`}
+                      {vehicle.vehicle_registration_number}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {getPeriodStatus(
-                        agreement.date_start ? agreement.date_start : "",
-                        agreement.date_end ? agreement.date_end : ""
-                      )}
+                      {vehicle.isactive ? "Available" : "Unavailable"}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                       <Link
-                        href={`/hire_agreement/${agreement.hire_agreement_id}`}
+                        href={`/manage_vehicle/${vehicle.id}`}
                         className="text-indigo-600 hover:text-indigo-900"
                       >
                         Edit
-                        <span className="sr-only">
-                          , {agreement.hire_agreement_id}
-                        </span>
+                        <span className="sr-only">, {vehicle.id}</span>
                       </Link>
                     </td>
                   </tr>

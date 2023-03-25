@@ -10,14 +10,15 @@ type getVehiclesResponse = Awaited<ReturnType<typeof getHireAgreements>>;
 export type getVehiclesResponseSuccess = getVehiclesResponse["data"];
 export type getVehiclesResponseError = getVehiclesResponse["error"];
 
-export const retrieveAllHireAgreementsRouter = createTRPCRouter({
-  RetrieveAllHireAgreements: publicProcedure
+export const retrieveAllOutletVehiclesRouter = createTRPCRouter({
+  RetrieveAllOutletVehicles: publicProcedure
     .input(z.object({ text: z.string() }))
     .query(async ({ input }) => {
       const { data, error } = await supabaseClient
-        .from("hire_agreement")
-        .select(`*, client(profiles(first_name, last_name))`)
-        .eq("staff_uid", input.text);
+        .from("staff")
+        .select(`outlet(vehicle(*))`)
+        // this syntax is OP wtf
+        .eq("user_uid", input.text);
       if (error) {
         // console.log(error);
         return error;
