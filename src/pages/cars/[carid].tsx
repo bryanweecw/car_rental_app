@@ -16,8 +16,14 @@ import { supabaseClient } from "~/server/sharedinstance";
 import superjson from "superjson";
 import ClipLoader from "react-spinners/ClipLoader";
 
+interface HAInvalidType {
+  date_start: string;
+  date_end: string;
+}
+
 interface CarType {
   id: number;
+  hire_agreement: HAInvalidType[];
   vehicle_make: string;
   vehicle_model: string;
   color: string;
@@ -192,6 +198,10 @@ export default function Car(
   //but we need to cast it to unknown first, because the data may be undefined, and we can't cast undefined to an array
   //this is very sus, but it works
 
+  const invalidDates = car[0]?.hire_agreement.map((dates) => {
+    return { startDate: dates.date_start, endDate: dates.date_end };
+  });
+
   if (!car[0]) {
     return <p>Car not found</p>;
   }
@@ -258,17 +268,7 @@ export default function Car(
               onChange={handleValueChange}
               minDate={yesterday}
               showShortcuts={false}
-              disabledDates={[
-                {
-                  startDate: "2023-02-02",
-                  endDate: "2023-02-05",
-                },
-                {
-                  startDate: "2024-02-13",
-                  endDate: "2024-12-15",
-                },
-              ]}
-              //abstract out disabledDates later
+              disabledDates={invalidDates}
             />
           </div>
           {value.endDate != null && value.startDate != null ? (

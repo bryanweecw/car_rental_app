@@ -17,7 +17,7 @@ export const vehicleInfoQueryRouter = createTRPCRouter({
       const idToSubmit = parseInt(input.text);
       const { data, error } = await supabaseClient
         .from("vehicle")
-        .select()
+        .select(`*, hire_agreement(date_start, date_end)`)
         .eq("id", idToSubmit);
       if (error) {
         // console.log(error);
