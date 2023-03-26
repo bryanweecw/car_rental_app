@@ -101,6 +101,31 @@ export default function Car(
   };
   const session = useSession();
 
+  function isDateRangeValid(
+    startDate: string,
+    endDate: string,
+    invalidDates: {
+      startDate: string;
+      endDate: string;
+    }[]
+  ) {
+    for (let i = 0; i < invalidDates.length; i++) {
+      const invalidStartDate = new Date(invalidDates?.[i]?.startDate as string);
+      const invalidEndDate = new Date(invalidDates?.[i]?.endDate as string);
+
+      if (
+        new Date(startDate) <= invalidEndDate &&
+        new Date(endDate) >= invalidStartDate
+      ) {
+        // The date range overlaps with an invalid date range
+        return false;
+      }
+    }
+
+    // The date range does not overlap with any invalid date range
+    return true;
+  }
+
   const [value, setValue] = useState<CustomDateRange>({
     startDate: new Date(),
     endDate: null,
@@ -152,14 +177,26 @@ export default function Car(
   };
 
   const handleValueChange = (newValue: UnformattedDateRange) => {
-    const formattedValue: CustomDateRange = {
-      startDate: new Date(newValue.startDate),
-      endDate:
-        newValue.endDate != null
-          ? new Date(newValue.endDate)
-          : new Date(newValue.startDate),
-    };
-    setValue(formattedValue);
+    //if no overlap with invalid dates
+    if (
+      isDateRangeValid(
+        newValue.startDate,
+        newValue.endDate ? newValue.endDate : newValue.startDate,
+        invalidDates ? invalidDates : []
+      ) == true
+    ) {
+      const formattedValue: CustomDateRange = {
+        startDate: new Date(newValue.startDate),
+        endDate:
+          newValue.endDate != null
+            ? new Date(newValue.endDate)
+            : new Date(newValue.startDate),
+      };
+      setValue(formattedValue);
+    } else {
+      toast("Please select a valid date range!");
+    }
+    //else toast
   };
 
   function getTotalPrice(startDate: Date, endDate: Date, pricePerDay: number) {
