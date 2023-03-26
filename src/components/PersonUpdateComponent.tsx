@@ -16,6 +16,7 @@ interface Person_profile {
   gender: string | undefined;
   isstaff: boolean | undefined;
   issetup: boolean | undefined;
+  driving_license_number: string | undefined;
 }
 
 type CustomDateRange = {
@@ -38,6 +39,7 @@ interface PUCProps {
     gender: any;
     isstaff: any;
     issetup: any;
+    driving_license_number: any;
   }) => Promise<void>;
 }
 
@@ -89,7 +91,7 @@ export default function PersonUpdateComponent({
           <div className="flex flex-col items-center justify-center">
             <span className="relative inline-block justify-center">
               <img
-                className="mx-auto h-auto w-48 rounded-full md:h-56 md:w-56"
+                className="mx-auto h-auto w-48 rounded-full border-2 text-center md:h-56 md:w-56"
                 src={personInfo?.avatar_url}
                 alt="Person Avatar"
               />
@@ -110,7 +112,7 @@ export default function PersonUpdateComponent({
             </span>
             <div className="flex flex-row">
               <input
-                className="mx-2 mt-6 bg-transparent text-right text-2xl font-semibold tracking-tight text-black"
+                className="mx-2 mt-6 border-2 bg-transparent text-right text-2xl font-semibold tracking-tight text-black"
                 defaultValue={personInfo?.first_name}
                 onBlur={(e) => {
                   if (e.target && !e.target.value) {
@@ -128,11 +130,13 @@ export default function PersonUpdateComponent({
                     user_uid: personInfo?.user_uid || "",
                   })
                 }
-                placeholder={personInfo?.first_name}
+                // placeholder={personInfo?.first_name}
+                placeholder="First Name"
+                id="first_name_input"
                 value={personInfo?.first_name}
               ></input>
               <input
-                className="mx-2 mt-6 bg-transparent text-left text-2xl font-semibold tracking-tight text-black"
+                className="mx-2 mt-6 border-2 bg-transparent text-left text-2xl font-semibold tracking-tight text-black"
                 defaultValue={personInfo?.last_name}
                 onBlur={(e) => {
                   if (e.target && !e.target.value) {
@@ -150,7 +154,9 @@ export default function PersonUpdateComponent({
                     user_uid: personInfo?.user_uid || "",
                   })
                 }
-                placeholder={personInfo?.last_name}
+                // placeholder={personInfo?.last_name}
+                placeholder="Last Name"
+                id="last_name_input"
                 value={personInfo?.last_name}
               ></input>
             </div>
@@ -160,6 +166,37 @@ export default function PersonUpdateComponent({
             </p>
           </div>
           <div className="mt-10 flex flex-col">
+            <div className="relative my-3">
+              <label
+                htmlFor="Driving License Number"
+                className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
+              >
+                Driving License Number
+              </label>
+              <input
+                type="text"
+                name="driving license number"
+                id="name"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                defaultValue={personInfo?.driving_license_number}
+                placeholder={personInfo?.driving_license_number}
+                onBlur={(e) => {
+                  if (e.target && !e.target.value) {
+                    setState({
+                      ...personInfo,
+                      driving_license_number: e.target.value,
+                    });
+                  }
+                }}
+                onChange={(event) =>
+                  setState({
+                    ...personInfo,
+                    driving_license_number: event.target.value,
+                  })
+                }
+                value={personInfo?.driving_license_number}
+              />
+            </div>
             <div className="relative my-3">
               <label
                 htmlFor="gender"
@@ -276,7 +313,8 @@ export default function PersonUpdateComponent({
                   personInfo?.address != null &&
                   personInfo?.phone_number != null &&
                   personInfo?.birthdate != null &&
-                  personInfo?.gender != null
+                  personInfo?.gender != null &&
+                  personInfo?.driving_license_number != null
                 ) {
                   setState({ ...personInfo, issetup: true });
                 }

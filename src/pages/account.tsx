@@ -29,6 +29,7 @@ export default function Account() {
     gender: string | undefined;
     isstaff: boolean | undefined;
     issetup: boolean | undefined;
+    driving_license_number: string | undefined;
   }
 
   const { session, isLoading } = useSessionContext();
@@ -42,7 +43,7 @@ export default function Account() {
       const { id } = user ?? {};
       const { data: profile_info } = await supabase
         .from("profiles")
-        .select("*")
+        .select("*, client( * )")
         .eq("user_uid", id);
       const user_uid = profile_info?.[0]?.user_uid;
       const avatar_url = profile_info?.[0]?.avatar_url;
@@ -55,6 +56,8 @@ export default function Account() {
       const gender = profile_info?.[0]?.gender;
       const isstaff = Boolean(profile_info?.[0]?.isstaff);
       const issetup = Boolean(profile_info?.[0]?.issetup);
+      const driving_license_number =
+        profile_info?.[0]?.client?.driving_license_number;
       setIsSetUp(issetup);
       const person: Person_profile = {
         user_uid: user_uid,
@@ -68,6 +71,7 @@ export default function Account() {
         gender: gender,
         isstaff: isstaff,
         issetup: issetup,
+        driving_license_number: driving_license_number,
       };
       return person;
     } catch (error) {
@@ -87,6 +91,7 @@ export default function Account() {
     gender: any;
     isstaff: any;
     issetup: any;
+    driving_license_number: any;
   }) => {
     const { user } = session ?? {};
     const { id } = user ?? {};
@@ -102,7 +107,37 @@ export default function Account() {
         updated_at: personInfo?.updated_at,
       })
       .eq("user_uid", id);
+    const { data: data2, error: error2 } = await supabase
+      .from("client")
+      .update({
+        driving_license_number: personInfo?.driving_license_number,
+      })
+      .eq("user_uid", id);
   };
+
+  // const updateDrivingLicense = async (personInfo: {
+  //   user_uid: any;
+  //   avatar_url: any;
+  //   updated_at: any;
+  //   first_name: any;
+  //   last_name: any;
+  //   address: any;
+  //   phone_number: any;
+  //   birthdate: any;
+  //   gender: any;
+  //   isstaff: any;
+  //   issetup: any;
+  //   driving_license_number: any;
+  // }) => {
+  //   const { user } = session ?? {};
+  //   const { id } = user ?? {};
+  //   const { data, error } = await supabase
+  //     .from("client")
+  //     .update({
+  //       driving_license_number: personInfo?.driving_license_number,
+  //     })
+  //     .eq("user_uid", id);
+  // };
 
   const [current_person, setCurrentPerson] = useState<Person_profile>();
 
