@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { CSSProperties, useCallback, useEffect, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { toast } from "react-toastify";
@@ -47,19 +45,20 @@ export default function Account() {
         .from("profiles")
         .select("*, client( * )")
         .eq("user_uid", id);
-      const user_uid = profile_info?.[0]?.user_uid;
-      const avatar_url = profile_info?.[0]?.avatar_url;
-      const updated_at = profile_info?.[0]?.updated_at;
-      const first_name = profile_info?.[0]?.first_name;
-      const last_name = profile_info?.[0]?.last_name;
-      const address = profile_info?.[0]?.address;
-      const phone_number = profile_info?.[0]?.phone_number;
-      const birthdate = profile_info?.[0]?.birthdate;
-      const gender = profile_info?.[0]?.gender;
-      const isstaff = Boolean(profile_info?.[0]?.isstaff);
-      const issetup = Boolean(profile_info?.[0]?.issetup);
-      const driving_license_number =
-        profile_info?.[0]?.client?.driving_license_number;
+      const user_uid = (profile_info?.[0] as Person_profile)?.user_uid;
+      const avatar_url = (profile_info?.[0] as Person_profile)?.avatar_url;
+      const updated_at = (profile_info?.[0] as Person_profile)?.updated_at;
+      const first_name = (profile_info?.[0] as Person_profile)?.first_name;
+      const last_name = (profile_info?.[0] as Person_profile)?.last_name;
+      const address = (profile_info?.[0] as Person_profile)?.address;
+      const phone_number = (profile_info?.[0] as Person_profile)?.phone_number;
+      const birthdate = (profile_info?.[0] as Person_profile)?.birthdate;
+      const gender = (profile_info?.[0] as Person_profile)?.gender;
+      const isstaff = Boolean((profile_info?.[0] as Person_profile)?.isstaff);
+      const issetup = Boolean((profile_info?.[0] as Person_profile)?.issetup);
+      const driving_license_number = (
+        profile_info?.[0]?.client as Person_profile
+      ).driving_license_number;
       setIsSetUp(issetup);
       const person: Person_profile = {
         user_uid: user_uid,
@@ -100,19 +99,20 @@ export default function Account() {
     const { data, error } = await supabase
       .from("profiles")
       .update({
-        first_name: personInfo?.first_name,
-        last_name: personInfo?.last_name,
-        address: personInfo?.address,
-        phone_number: personInfo?.phone_number,
-        birthdate: personInfo?.birthdate,
-        gender: personInfo?.gender,
-        updated_at: personInfo?.updated_at,
+        first_name: (personInfo as Person_profile)?.first_name,
+        last_name: (personInfo as Person_profile)?.last_name,
+        address: (personInfo as Person_profile)?.address,
+        phone_number: (personInfo as Person_profile)?.phone_number,
+        birthdate: (personInfo as Person_profile)?.birthdate,
+        gender: (personInfo as Person_profile)?.gender,
+        updated_at: (personInfo as Person_profile)?.updated_at,
       })
       .eq("user_uid", id);
     const { data: data2, error: error2 } = await supabase
       .from("client")
       .update({
-        driving_license_number: personInfo?.driving_license_number,
+        driving_license_number: (personInfo as Person_profile)
+          ?.driving_license_number,
       })
       .eq("user_uid", id);
   };
