@@ -22,3 +22,33 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+#first_name_input ::placeholder {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+#first_name_input :-ms-input-placeholder {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+#first_name_input ::-ms-input-placeholder {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+#last_name_input ::placeholder {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+#last_name_input :-ms-input-placeholder {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+#last_name_input ::-ms-input-placeholder {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
