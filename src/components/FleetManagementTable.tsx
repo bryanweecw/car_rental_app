@@ -129,7 +129,7 @@ export default function FleetManagementTable({ id }: FATProps) {
                         className="text-indigo-600 hover:text-indigo-900"
                       >
                         Edit
-                        <span className="sr-only">, {vehicle.id}</span>
+                        <span className="sr-only">{vehicle.id}</span>
                       </Link>
                     </td>
                   </tr>
