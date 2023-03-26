@@ -290,9 +290,11 @@ export default function PersonUpdateComponent({
                 inputClassName="shadow-md"
                 toggleClassName="rounded-r-lg bg-opacity-40 bg-gray-400 hover:bg-blue-800 hover:bg-opacity-60 transition-all duration-150 ease-in-out"
                 minDate={new Date("1900-01-01")}
-                placeholder={new Date(
-                  DOBvalue.startDate ? DOBvalue.startDate : ""
-                ).toLocaleDateString()}
+                placeholder={
+                  DOBvalue.startDate
+                    ? new Date(DOBvalue.startDate).toLocaleDateString()
+                    : ""
+                }
                 showShortcuts={false}
                 startFrom={personInfo?.birthdate}
                 asSingle={true}
