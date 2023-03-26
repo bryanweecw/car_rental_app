@@ -47,6 +47,23 @@ export default function CarUpdateComponent({ vehicleInfo }: CUCProps) {
             />
           </div>
         </div>
+        <label
+          className="mt-4 mb-2 block font-bold text-gray-700"
+          htmlFor="reg-number"
+        >
+          Vehicle Registration Number [Read-Only]
+        </label>
+        <input
+          readOnly={true}
+          type="text"
+          name="reg-number"
+          id="reg-number"
+          value={car?.vehicle_registration_number}
+          onChange={(e) =>
+            setCar({ ...car, vehicle_registration_number: e.target.value })
+          }
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
         <div className="mt-4 grid grid-cols-2 justify-between custxs:text-xs">
           <div>
             <label
@@ -63,23 +80,7 @@ export default function CarUpdateComponent({ vehicleInfo }: CUCProps) {
               onChange={(e) => setCar({ ...car, vehicle_make: e.target.value })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
-            <label
-              className="mt-4 mb-2 block font-bold text-gray-700"
-              htmlFor="reg-number"
-            >
-              Vehicle Registration Number [Read-Only]
-            </label>
-            <input
-              readOnly={true}
-              type="text"
-              name="reg-number"
-              id="reg-number"
-              value={car?.vehicle_registration_number}
-              onChange={(e) =>
-                setCar({ ...car, vehicle_registration_number: e.target.value })
-              }
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
+
             <label
               className="mt-4 mb-2 block font-bold text-gray-700"
               htmlFor="imagesrc"
@@ -141,6 +142,24 @@ export default function CarUpdateComponent({ vehicleInfo }: CUCProps) {
               }
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
+            <label
+              className="mt-4 mb-2 block font-bold text-gray-700"
+              htmlFor="availability"
+            >
+              Availability
+            </label>
+            <select
+              name="availability"
+              id="availability"
+              value={car?.isactive ? "Yes" : "No"}
+              onChange={(e) =>
+                setCar({ ...car, isactive: e.target.value === "Yes" })
+              }
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            >
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
           </div>
           <div>
             <label
@@ -220,24 +239,6 @@ export default function CarUpdateComponent({ vehicleInfo }: CUCProps) {
               }
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
-            <label
-              className="mt-4 mb-2 block font-bold text-gray-700"
-              htmlFor="availability"
-            >
-              Availability
-            </label>
-            <select
-              name="availability"
-              id="availability"
-              value={car?.isactive ? "Yes" : "No"}
-              onChange={(e) =>
-                setCar({ ...car, isactive: e.target.value === "Yes" })
-              }
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            >
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
           </div>
         </div>
 
