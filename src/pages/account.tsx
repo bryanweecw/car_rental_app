@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { CSSProperties, useCallback, useEffect, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { toast } from "react-toastify";
@@ -144,7 +146,7 @@ export default function Account() {
   //set person to be logged in account's profile.
   useEffect(() => {
     if (!isLoading && session) {
-      getProfileInfo().then((person) => setCurrentPerson(person));
+      void getProfileInfo().then((person) => setCurrentPerson(person));
     }
   }, [getProfileInfo, isLoading, session, supabase]);
 
