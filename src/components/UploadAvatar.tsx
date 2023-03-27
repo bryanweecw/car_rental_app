@@ -80,10 +80,10 @@ export default function Avatar({
           <img
             src={avatarUrl}
             alt="Avatar"
-            className="avatar image mx-auto h-auto w-48 rounded-full border-2 text-center md:h-56 md:w-56"
+            className="avatar image mx-auto h-48 w-48 rounded-full border-2 text-center md:h-56 md:w-56"
           />
         ) : (
-          <div className="avatar no-image mx-auto h-auto w-48 rounded-full border-2 text-center md:h-56 md:w-56" />
+          <div className="avatar no-image mx-auto h-48 w-48 rounded-full border-2 text-center md:h-56 md:w-56" />
         )}
         <label
           className="absolute bottom-0 right-0 mx-auto flex h-48 w-48 items-center justify-center rounded-full bg-gray-700 text-white opacity-0 ring-1 ring-white hover:opacity-70 md:h-56 md:w-56"
