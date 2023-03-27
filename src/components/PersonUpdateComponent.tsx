@@ -1,8 +1,6 @@
 import Link from "next/link";
 import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
-import { toast } from "react-toastify";
-import { date } from "zod";
 import Avatar from "~/components/UploadAvatar";
 
 interface Person_profile {
@@ -66,27 +64,26 @@ export default function PersonUpdateComponent({
 
   return (
     <>
-      {" "}
       <div className="grid">
         <div className="mx-auto mt-8 place-self-center rounded-2xl border-2 bg-white p-10 drop-shadow-lg md:w-2/5 custxs:w-4/5 custsm:w-4/5 custmd:w-3/5">
-          <Link href="/" className="relative w-1/5  font-light text-gray-400">
-            <button
-              type="button"
-              className="mb-2 flex items-center rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-              <svg width="24" height="24" viewBox="0 0 16 16">
-                <path
-                  d="M9 4 L5 8 L9 12"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                />
-              </svg>
-              Back
-            </button>
-          </Link>
+          {/* <Link href="/" className="relative w-1/5  font-light text-gray-400">
+        <button
+          type="button"
+          className="mb-2 flex items-center rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+        >
+          <svg width="24" height="24" viewBox="0 0 16 16">
+            <path
+              d="M9 4 L5 8 L9 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linejoin="round"
+              stroke-linecap="round"
+            />
+          </svg>
+          Back
+        </button>
+      </Link> */}
           <div className="flex flex-col items-center justify-center">
             {/* <span className="relative inline-block justify-center">
               <img

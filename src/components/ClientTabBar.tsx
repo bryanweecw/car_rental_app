@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import {
-  StaffTabSelectionString,
-  useStaffTabContext,
-} from "~/context/StaffTabContext";
+  type ClientTabSelectionString,
+  useClientTabContext,
+} from "~/context/ClientTabContext";
 
 /*
   This example requires some changes to your config:
@@ -19,17 +19,16 @@ import {
   ```
 */
 const tabs = [
-  { name: "Hire Agreements", value: "hire_agreements" },
-  { name: "Fleet Management", value: "fleet_management" },
-  { name: "Client Management", value: "client_management" },
+  { name: "Profile", value: "profile" },
+  { name: "My Hire Agreements", value: "hire_agreements" },
 ];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function TabBar() {
-  const { activeTab, setActiveTab } = useStaffTabContext();
+export default function ClientTabBar() {
+  const { activeTab, setActiveTab } = useClientTabContext();
 
   useEffect(() => {
     const selectElement = document.getElementById("tabs") as HTMLSelectElement;
@@ -39,7 +38,7 @@ export default function TabBar() {
     }
   }, [activeTab]);
   return (
-    <div>
+    <div className="mt-5 grid">
       <div className="sm:hidden">
         <label htmlFor="tabs" className="sr-only">
           Select a tab
@@ -47,10 +46,10 @@ export default function TabBar() {
         <select
           id="tabs"
           name="tabs"
-          className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+          className="block place-self-center rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 md:w-2/5 custxs:w-4/5 custsm:w-4/5 custmd:w-3/5"
           defaultValue={tabs.find((tab) => tab.value == activeTab)?.value}
           onChange={(e) =>
-            setActiveTab(e.target.value as StaffTabSelectionString)
+            setActiveTab(e.target.value as ClientTabSelectionString)
           }
         >
           {tabs.map((tab) => (
@@ -60,7 +59,7 @@ export default function TabBar() {
           ))}
         </select>
       </div>
-      <div className="hidden sm:block">
+      <div className="hidden place-self-center sm:block md:w-2/5 custxs:w-4/5  custsm:w-4/5 custmd:w-3/5 ">
         <nav
           className="isolate flex divide-x divide-gray-200 rounded-lg shadow"
           aria-label="Tabs"
@@ -68,7 +67,9 @@ export default function TabBar() {
           {tabs.map((tab, tabIdx) => (
             <a
               key={tab.name}
-              onClick={() => setActiveTab(tab.value as StaffTabSelectionString)}
+              onClick={() =>
+                setActiveTab(tab.value as ClientTabSelectionString)
+              }
               className={classNames(
                 tab.value == activeTab
                   ? "text-gray-900"

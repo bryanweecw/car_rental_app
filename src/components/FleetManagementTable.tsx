@@ -1,5 +1,7 @@
 import { useSessionContext } from "@supabase/auth-helpers-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 import { api } from "~/utils/api";
 
 interface HiredDates {
@@ -33,12 +35,25 @@ interface FATProps {
 }
 
 export default function FleetManagementTable({ id }: FATProps) {
-  const { data } =
+  const { data, refetch } =
     api.RetrieveAllOutletVehicles.RetrieveAllOutletVehicles.useQuery({
       text: id,
     });
   console.log(data);
 
+  const { mutate, isLoading } = api.DeleteVehicle.VehicleDelete.useMutation({
+    onSuccess: (res) => {
+      console.log(res);
+      toast("Vehicle Deleted");
+      void refetch();
+    },
+    onError: (err) => {
+      console.log(err);
+      toast("Failed to delete Vehicle");
+    },
+  });
+
+  const router = useRouter();
   const outletVehicles = (data as ResultType[])?.[0]?.outlet?.vehicle ?? [];
 
   return (
@@ -53,12 +68,15 @@ export default function FleetManagementTable({ id }: FATProps) {
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          {/* <button
+          <button
             type="button"
             className="block rounded-md bg-indigo-600 py-2 px-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={() => {
+              void router.push("/fleet_management/add_vehicle");
+            }}
           >
-            Add user
-          </button> */}
+            Add Vehicle
+          </button>
         </div>
       </div>
       <div className="mt-8 flow-root">
@@ -131,6 +149,14 @@ export default function FleetManagementTable({ id }: FATProps) {
                         Edit
                         <span className="sr-only">{vehicle.id}</span>
                       </Link>
+                      <span
+                        className="ml-5 text-red-600 hover:text-red-900"
+                        onClick={() => {
+                          mutate({ text: vehicle.vehicle_registration_number });
+                        }}
+                      >
+                        Delete
+                      </span>
                     </td>
                   </tr>
                 ))}
