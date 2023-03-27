@@ -24,6 +24,10 @@ interface CarType {
   vehicle_registration_number: string;
   engine_size: string;
   mot_test_date: string;
+  outlet: {
+    outlet_id: number;
+    location: string;
+  };
 }
 
 export default function CarEdit() {

@@ -49,7 +49,7 @@ interface Person_profile {
   driving_license_number: string | undefined;
 }
 
-export default function CarEdit() {
+export default function ClientEdit() {
   const supabase = useSupabaseClient();
   const router = useRouter();
 
@@ -127,7 +127,7 @@ export default function CarEdit() {
     };
   });
 
-  //retrieve vehicle info
+  //retrieve client info
   const { clientid } = router.query;
 
   const { data } = api.clientInfoQuery.getClientInfo.useQuery({
@@ -222,6 +222,7 @@ export default function CarEdit() {
               birthdate: (personInfo as Person_profile)?.birthdate,
               gender: (personInfo as Person_profile)?.gender,
               updated_at: (personInfo as Person_profile)?.updated_at,
+              avatar_url: (personInfo as Person_profile)?.avatar_url,
             })
             .eq("user_uid", idtoSubmit);
           const { data: data2, error: error2 } = await supabase
@@ -234,6 +235,7 @@ export default function CarEdit() {
           if (error || error2) {
             toast("Error updating profile");
           }
+          toast("Changes saved!");
         } else {
           toast("You are not authorized to edit this profile");
         }
@@ -248,6 +250,7 @@ export default function CarEdit() {
             birthdate: (personInfo as Person_profile)?.birthdate,
             gender: (personInfo as Person_profile)?.gender,
             updated_at: (personInfo as Person_profile)?.updated_at,
+            avatar_url: (personInfo as Person_profile)?.avatar_url,
           })
           .eq("user_uid", idtoSubmit);
         const { data: data2, error: error2 } = await supabase
@@ -260,6 +263,7 @@ export default function CarEdit() {
         if (error || error2) {
           toast("Error updating profile");
         }
+        toast("Changes saved!");
       }
     }
   };
@@ -267,7 +271,6 @@ export default function CarEdit() {
   if (!isStaff && !session) {
     return null;
   } else {
-    //check that staff is from the same outlet as the vehicle
     if (!client) {
       return (
         <div className="flex h-screen items-center justify-center">

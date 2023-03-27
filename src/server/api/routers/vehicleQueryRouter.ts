@@ -2,7 +2,7 @@ import { supabaseClient } from "../../sharedinstance";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 async function getVehicles() {
-  return await supabaseClient.from("vehicle").select();
+  return await supabaseClient.from("vehicle").select(`*, outlet(*)`);
 }
 
 type getVehiclesResponse = Awaited<ReturnType<typeof getVehicles>>;
@@ -11,7 +11,9 @@ export type getVehiclesResponseError = getVehiclesResponse["error"];
 
 export const vehicleQueryRouter = createTRPCRouter({
   hello: publicProcedure.query(async () => {
-    const { data, error } = await supabaseClient.from("vehicle").select();
+    const { data, error } = await supabaseClient
+      .from("vehicle")
+      .select(`*, outlet(*)`);
     if (error) {
       // console.log(error);
       return error;

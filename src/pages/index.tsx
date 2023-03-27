@@ -29,6 +29,11 @@ interface HomeProps {
   trpcState: TrpcStateVehicle;
 }
 
+interface OutletInfo {
+  outlet_id: number;
+  location: string;
+}
+
 export async function getStaticProps() {
   const ssg = createProxySSGHelpers({
     router: vehicleQueryRouter,
@@ -45,9 +50,29 @@ export async function getStaticProps() {
 }
 
 const Home = (props: HomeProps) => {
+  const outlets = [
+    {
+      outlet_id: 1929,
+      location: "50 Kallang Ave, #01-01, Singapore 339505",
+    },
+    {
+      outlet_id: 1028,
+      location: "1 Kim Seng Promenade, #01-01, Singapore 237994",
+    },
+    {
+      outlet_id: 1050,
+      location: "10 Bayfront Avenue, #01-01, Singapore 018956",
+    },
+  ];
+  const [outletSelected, setOutletSelected] = useState<number[]>([]);
+
   const data = props.trpcState.queries[0]?.state.data;
   const cars_available = data?.filter((ele) => {
-    return ele.isactive;
+    if (outletSelected.length == 0) {
+      return ele.isactive;
+    } else {
+      return ele.isactive && outletSelected.includes(ele.outlet_id as number);
+    }
   });
   const [query, setQuery] = useState("");
   const options = {
@@ -58,8 +83,12 @@ const Home = (props: HomeProps) => {
   const fuse = new Fuse(cars_available ? cars_available : [], options);
   const results = fuse.search(query);
   const carResult = query
-    ? results.map((result) => result.item)
+    ? results.map((result) => {
+        result.item;
+      })
     : cars_available;
+
+  console.log(outletSelected);
 
   return (
     <>
@@ -75,13 +104,42 @@ const Home = (props: HomeProps) => {
           </h2>
           {/* <CarsSearchBar apiData={cars} /> */}
           <SearchBar query={query} setQuery={setQuery} />
+          <div className="rounded-lg border border-black px-2 py-5">
+            <h1 className="font-bold">Select Outlets</h1>
+            {outlets.map((outlet) => (
+              <span key={outlet.outlet_id} className="mx-2">
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  value={outlet.outlet_id}
+                  key={outlet.outlet_id}
+                  onChange={(e) => {
+                    const newValue = parseInt(e.target.value);
+                    if (outletSelected.includes(newValue)) {
+                      setOutletSelected((prevState) =>
+                        prevState.filter((id) => id !== newValue)
+                      );
+                    } else {
+                      setOutletSelected((prevState) => [
+                        ...prevState,
+                        newValue,
+                      ]);
+                    }
+                  }}
+                />
+                <label htmlFor={outlet.outlet_id.toString()}>
+                  {outlet.location}
+                </label>
+              </span>
+            ))}
+          </div>
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {carResult?.map((car) => (
-              <div key={car.id} className="group relative">
+              <div key={car?.id} className="group relative">
                 <div className="aspect-w-1 aspect-h-1 lg:aspect-none h-80 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
                   <img
-                    src={car.imagesrc !== null ? car.imagesrc : ""}
-                    alt={car.imagealt !== null ? car.imagealt : ""}
+                    src={car?.imagesrc !== null ? car?.imagesrc : ""}
+                    alt={car?.imagealt !== null ? car?.imagealt : ""}
                     className="g:h-full h-full w-full object-contain object-center lg:w-full"
                   />
                 </div>
@@ -90,17 +148,22 @@ const Home = (props: HomeProps) => {
                     <h3 className="text-sm text-gray-700">
                       <Link
                         href={`/cars/${
-                          car.id !== null ? car.id.toString() : ""
+                          car?.id && car?.id !== undefined
+                            ? car?.id.toString()
+                            : ""
                         }`}
                       >
                         <span aria-hidden="true" className="absolute inset-0" />
-                        {car.vehicle_make} {car.vehicle_model}
+                        {car?.vehicle_make} {car?.vehicle_model}
                       </Link>
                     </h3>
-                    <p className="mt-1 text-sm text-gray-500">{car.color}</p>
+                    <p className="mt-1 text-sm text-gray-500">{car?.color}</p>
+                    <p className="mt-1 text-sm text-gray-500">
+                      {(car?.outlet as unknown as OutletInfo)?.location}
+                    </p>
                   </div>
                   <p className="text-sm font-medium text-gray-900">
-                    ${car.hire_rate}/day
+                    ${car?.hire_rate}/day
                   </p>
                 </div>
               </div>
