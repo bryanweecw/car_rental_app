@@ -27,6 +27,13 @@ export default function Avatar({
     }
   }, [url]);
 
+  useEffect(() => {
+    if (url) {
+      downloadImage(url);
+    }
+  }, [uploading]);
+  // don't question this, it's just a hack to get the avatar to update
+
   async function downloadImage(path: string) {
     try {
       const { data, error } = await supabase.storage
