@@ -12,6 +12,7 @@ import { retrieveAllOutletVehiclesRouter } from "./routers/retrieveAllOutletVehi
 import { mutateCarRouter } from "./routers/mutateCarRouter";
 import { retrieveAllClientsRouter } from "./routers/retrieveAllClientsRouter";
 import { clientInfoQueryRouter } from "./routers/clientInfoQueryRouter";
+import { retrieveAllTasks } from "./routers/retrieveAllTasks";
 
 /**
  * This is the primary router for your server.
@@ -32,6 +33,7 @@ export const appRouter = createTRPCRouter({
   mutateCarRouter: mutateCarRouter,
   retrieveAllClients: retrieveAllClientsRouter,
   clientInfoQuery: clientInfoQueryRouter,
+  retrieveAllTasks: retrieveAllTasks,
 });
 
 // export type definition of API

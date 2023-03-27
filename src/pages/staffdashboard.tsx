@@ -3,12 +3,13 @@ import {
   useSessionContext,
 } from "@supabase/auth-helpers-react";
 import { type NextRouter, useRouter } from "next/router";
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ClientManagementTable from "~/components/ClientManagementTable";
 import FleetManagementTable from "~/components/FleetManagementTable";
 import HireAgreementTable from "~/components/HireAgreementTable";
 import TabBar from "~/components/TabBar";
 import { useStaffTabContext } from "~/context/StaffTabContext";
+import StaffToDo from "~/components/StaffToDo";
 
 export default function StaffDashboard() {
   const { activeTab } = useStaffTabContext();
@@ -90,6 +91,7 @@ export default function StaffDashboard() {
             </header>
             <main>
               <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <StaffToDo />
                 <TabBar />
                 {activeTab === "hire_agreements" ? (
                   <HireAgreementTable id={session?.user.id as string} />
