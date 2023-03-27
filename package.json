@@ -30,6 +30,7 @@
     "react-spinners": "^0.13.8",
     "react-tailwindcss-datepicker": "^1.5.0",
     "react-toastify": "^9.1.1",
+    "supabase": "^1.45.2",
     "superjson": "1.9.1",
     "ts-node": "^10.9.1",
     "tsx": "^3.12.3",

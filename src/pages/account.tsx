@@ -9,6 +9,7 @@ import {
 import { supabase } from "@supabase/auth-ui-shared";
 import PersonUpdateComponent from "~/components/PersonUpdateComponent";
 import { ClipLoader } from "react-spinners";
+import Avatar from "~/components/uploadavatar";
 
 /* eslint-disable @next/next/no-img-element */
 export default function Account() {
@@ -105,6 +106,7 @@ export default function Account() {
         birthdate: personInfo?.birthdate,
         gender: personInfo?.gender,
         updated_at: personInfo?.updated_at,
+        avatar_url: personInfo?.avatar_url,
       })
       .eq("user_uid", id);
     const { data: data2, error: error2 } = await supabase
