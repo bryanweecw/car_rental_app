@@ -1,8 +1,6 @@
 import Link from "next/link";
-import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
-import { toast } from "react-toastify";
-import { date } from "zod";
 import Avatar from "~/components/UploadAvatar";
 
 interface Person_profile {

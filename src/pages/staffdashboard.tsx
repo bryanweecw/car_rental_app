@@ -91,7 +91,6 @@ export default function StaffDashboard() {
             </header>
             <main>
               <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <StaffToDo />
                 <TabBar />
                 {activeTab === "hire_agreements" ? (
                   <HireAgreementTable id={session?.user.id as string} />
@@ -101,6 +100,8 @@ export default function StaffDashboard() {
                   <ClientManagementTable />
                 ) : activeTab === "billing" ? (
                   <div>Billing</div>
+                ) : activeTab === "to_do" ? (
+                  <StaffToDo />
                 ) : (
                   <></>
                 )}

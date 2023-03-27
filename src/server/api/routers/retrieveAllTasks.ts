@@ -2,13 +2,13 @@ import { supabaseClient } from "../../sharedinstance";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 
-async function getTasks({ id }: { id: string }) {
-  return await supabaseClient.from("staff_tasks").select().eq("id", id);
-}
+// async function getTasks({ id }: { id: string }) {
+//   return await supabaseClient.from("staff_tasks").select().eq("id", id);
+// }
 
-type getTasksResponse = Awaited<ReturnType<typeof getTasks>>;
-export type getVehicleInfoResponseSuccess = getTasksResponse["data"];
-export type getVehicleInfoResponseError = getTasksResponse["error"];
+// type getTasksResponse = Awaited<ReturnType<typeof getTasks>>;
+// export type getVehicleInfoResponseSuccess = getTasksResponse["data"];
+// export type getVehicleInfoResponseError = getTasksResponse["error"];
 
 export const retrieveAllTasks = createTRPCRouter({
   getTasks: publicProcedure
@@ -16,7 +16,7 @@ export const retrieveAllTasks = createTRPCRouter({
     .query(async ({ input }) => {
       const { data, error } = await supabaseClient
         .from("staff_tasks")
-        .select("staff_tasks.*, profiles!created_by(first_name, last_name)")
+        .select("*")
         .eq("staff_id", input.text);
 
       //   const { data: data2, error: error2 } = await supabaseClient
@@ -27,7 +27,7 @@ export const retrieveAllTasks = createTRPCRouter({
         // console.log(error);
         return error;
       } else {
-        // console.log("data retrieved:", data);
+        console.log("data retrieved:", data);
         return data;
       }
     }),

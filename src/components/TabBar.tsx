@@ -23,6 +23,7 @@ const tabs = [
   { name: "Fleet Management", value: "fleet_management" },
   { name: "Client Management", value: "client_management" },
   { name: "Billing", value: "billing" },
+  { name: "To Do", value: "to_do" },
 ];
 
 function classNames(...classes: string[]) {
