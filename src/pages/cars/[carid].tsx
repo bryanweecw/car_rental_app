@@ -21,6 +21,10 @@ interface HAInvalidType {
   date_end: string;
 }
 
+interface SetUpStatusType {
+  issetup: boolean;
+}
+
 interface CarType {
   id: number;
   hire_agreement: HAInvalidType[];
@@ -34,6 +38,7 @@ interface CarType {
   imagealt: string;
   description: string;
   vehicle_registration_number: string;
+  outlet: { outlet_id: number; location: string };
 } //declare type to be used in getStaticProps
 
 export async function getStaticProps(
@@ -142,6 +147,11 @@ export default function Car(
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
+  const { data: setupStatusData } =
+    api.retrieveSetUpStatus.retrieveSetUpStatus.useQuery({
+      text: session?.user?.id as string,
+    });
+
   const { mutate, isLoading } =
     api.hireAgreementCreationMutation.HireAgreementCreation.useMutation({
       onSuccess: (res) => {
@@ -155,6 +165,8 @@ export default function Car(
   const notify = () => {
     if (
       session != null &&
+      setupStatusData &&
+      (setupStatusData as SetUpStatusType[])[0]?.issetup &&
       value.endDate != null &&
       value.startDate != null &&
       car[0]
@@ -165,12 +177,18 @@ export default function Car(
         date_start: value.startDate.toISOString().substring(0, 10),
         date_end: value.endDate.toISOString().substring(0, 10),
         amount: getTotalPrice(value.startDate, value.endDate, car[0].hire_rate),
+        outlet_uid: car[0].outlet.outlet_id,
       };
       mutate(dataObject);
       console.log(dataObject);
       toast("Booking successful!");
     } else if (session == null) {
       toast("Please log in or create an account!");
+    } else if (
+      setupStatusData &&
+      (setupStatusData as SetUpStatusType[])[0]?.issetup == false
+    ) {
+      toast("Please complete your account setup!");
     } else {
       toast("Please select a date range!");
     }
@@ -287,6 +305,9 @@ export default function Car(
               </p>
               <p className="mt-1 text-lg text-gray-700">
                 Capacity: {car[0].capacity} People
+              </p>
+              <p className="mt-1 text-lg text-gray-700">
+                Outlet: {car[0].outlet.location}
               </p>
             </div>
             <p className="text-xl font-medium text-gray-900">

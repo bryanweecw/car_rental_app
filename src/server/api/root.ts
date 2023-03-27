@@ -12,6 +12,11 @@ import { retrieveAllOutletVehiclesRouter } from "./routers/retrieveAllOutletVehi
 import { mutateCarRouter } from "./routers/mutateCarRouter";
 import { retrieveAllClientsRouter } from "./routers/retrieveAllClientsRouter";
 import { clientInfoQueryRouter } from "./routers/clientInfoQueryRouter";
+import { retrieveClientHireAgreementsRouter } from "./routers/retrieveClientHireAgreementsRouter";
+import { deleteHireAgreementRouter } from "./routers/DeleteHireAgreementRouter";
+import { addCarRouter } from "./routers/addCarRouter";
+import { deleteVehicleRouter } from "./routers/DeleteVehicleRouter";
+import { retrieveSetUpStatusRouter } from "./routers/getRoleRouter";
 
 /**
  * This is the primary router for your server.
@@ -30,8 +35,13 @@ export const appRouter = createTRPCRouter({
   hireAgreementUpdateMutation: updateHireAgreementRouter,
   RetrieveAllOutletVehicles: retrieveAllOutletVehiclesRouter,
   mutateCarRouter: mutateCarRouter,
+  addCarRouter: addCarRouter,
   retrieveAllClients: retrieveAllClientsRouter,
   clientInfoQuery: clientInfoQueryRouter,
+  RetrieveClientHireAgreements: retrieveClientHireAgreementsRouter,
+  DeleteHireAgreement: deleteHireAgreementRouter,
+  DeleteVehicle: deleteVehicleRouter,
+  retrieveSetUpStatus: retrieveSetUpStatusRouter,
 });
 
 // export type definition of API

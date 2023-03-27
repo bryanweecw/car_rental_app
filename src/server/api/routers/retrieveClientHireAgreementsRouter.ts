@@ -2,16 +2,16 @@ import { z } from "zod";
 import { supabaseClient } from "../../sharedinstance";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
-export const retrieveSetUpStatusRouter = createTRPCRouter({
-  retrieveSetUpStatus: publicProcedure
+export const retrieveClientHireAgreementsRouter = createTRPCRouter({
+  RetrieveClientHireAgreements: publicProcedure
     .input(z.object({ text: z.string() }))
     .query(async ({ input }) => {
       const { data, error } = await supabaseClient
-        .from("profiles")
-        .select(`issetup`)
-        .eq("user_uid", input.text);
+        .from("hire_agreement")
+        .select(`*, client(profiles(first_name, last_name))`)
+        .eq("client_uid", input.text);
       if (error) {
-        //   console.log(error);
+        // console.log(error);
         return error;
       } else {
         // console.log("data retrieved:", data);

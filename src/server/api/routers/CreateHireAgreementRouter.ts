@@ -1,3 +1,4 @@
+import { randomInt } from "crypto";
 import { z } from "zod";
 import { supabaseClient } from "../../sharedinstance";
 import { createTRPCRouter, publicProcedure } from "../trpc";
@@ -8,6 +9,7 @@ const HireAgreementCreationDataSchema = z.object({
   client_uid: z.string(),
   date_start: z.string(),
   date_end: z.string(),
+  outlet_uid: z.number(),
 });
 
 export const createHireAgreementRouter = createTRPCRouter({
@@ -25,10 +27,24 @@ export const createHireAgreementRouter = createTRPCRouter({
         console.log("Transaction inserted successfully:", transactionData);
       }
 
+      const { data: staffData, error: staffError } = await supabaseClient
+        .from("staff")
+        .select("user_uid")
+        .eq("outlet_id", input.outlet_uid);
+      if (staffError) {
+        console.log(staffError);
+      } else {
+        console.log("Transaction inserted successfully:", transactionData);
+      }
+
+      const staffAssigned = staffData?.[randomInt(0, staffData.length)]
+        ?.user_uid as string;
+
       if (
         transactionData &&
         transactionData[0] &&
-        transactionData[0].transaction_id
+        transactionData[0].transaction_id &&
+        staffAssigned
       ) {
         const { data: hireAgreementData, error: hireAgreementError } =
           await supabaseClient
@@ -38,7 +54,7 @@ export const createHireAgreementRouter = createTRPCRouter({
               rental_cost: input.amount,
               vehicle_registration_number: input.vehicle_registration_number,
               client_uid: input.client_uid,
-              staff_uid: "ec4fd7e3-a5cb-45e2-980c-32b385960322", //fix later
+              staff_uid: staffAssigned,
               date_start: input.date_start,
               date_end: input.date_end,
             })

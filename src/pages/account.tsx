@@ -13,6 +13,9 @@ import PersonUpdateComponent from "~/components/PersonUpdateComponent";
 import { ClipLoader } from "react-spinners";
 
 import { useRouter } from "next/router";
+import ClientTabBar from "~/components/ClientTabBar";
+import { useClientTabContext } from "~/context/ClientTabContext";
+import ClientHireAgreementTable from "~/components/ClientHireAgreementTable";
 
 /* eslint-disable @next/next/no-img-element */
 export default function Account() {
@@ -153,6 +156,16 @@ export default function Account() {
     margin: "0 auto",
     borderColor: "red",
   };
+  const { activeTab, setActiveTab } = useClientTabContext();
+
+  useEffect(() => {
+    const selectElement = document.getElementById("tabs") as HTMLSelectElement;
+
+    if (selectElement) {
+      selectElement.value = activeTab;
+    }
+  }, [activeTab]);
+
   if (!current_person) {
     return (
       <>
@@ -171,11 +184,18 @@ export default function Account() {
   } else {
     return (
       <>
-        <PersonUpdateComponent
-          personInfo={current_person}
-          setState={setCurrentPerson}
-          updateProfile={updateProfileDatabase}
-        />
+        <ClientTabBar />
+        {activeTab === "hire_agreements" ? (
+          <ClientHireAgreementTable id={session?.user.id as string} />
+        ) : activeTab === "profile" ? (
+          <PersonUpdateComponent
+            personInfo={current_person}
+            setState={setCurrentPerson}
+            updateProfile={updateProfileDatabase}
+          />
+        ) : (
+          <></>
+        )}
       </>
     );
   }

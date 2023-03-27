@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { toast } from "react-toastify";
 import { api } from "~/utils/api";
 
 const people = [
@@ -34,11 +35,24 @@ interface HATProps {
 }
 
 export default function HireAgreementTable({ id }: HATProps) {
-  const { data } =
+  const { data, refetch } =
     api.RetrieveAllHireAgreements.RetrieveAllHireAgreements.useQuery({
       text: id,
     });
   console.log(data);
+
+  const { mutate, isLoading } =
+    api.DeleteHireAgreement.HireAgreementDelete.useMutation({
+      onSuccess: (res) => {
+        console.log(res);
+        toast("Hire Agreement Deleted");
+        void refetch();
+      },
+      onError: (err) => {
+        console.log(err);
+        toast("Failed to delete Hire Agreement");
+      },
+    });
 
   function getPeriodStatus(datestart: string, dateend: string) {
     if (datestart == "" || dateend == "") {
@@ -158,6 +172,14 @@ export default function HireAgreementTable({ id }: HATProps) {
                           , {agreement.hire_agreement_id}
                         </span>
                       </Link>
+                      <span
+                        className="ml-5 text-red-600 hover:text-red-900"
+                        onClick={() => {
+                          mutate({ text: agreement.hire_agreement_id });
+                        }}
+                      >
+                        Delete
+                      </span>
                     </td>
                   </tr>
                 ))}

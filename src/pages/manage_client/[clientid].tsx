@@ -49,7 +49,7 @@ interface Person_profile {
   driving_license_number: string | undefined;
 }
 
-export default function CarEdit() {
+export default function ClientEdit() {
   const supabase = useSupabaseClient();
   const router = useRouter();
 
@@ -127,7 +127,7 @@ export default function CarEdit() {
     };
   });
 
-  //retrieve vehicle info
+  //retrieve client info
   const { clientid } = router.query;
 
   const { data } = api.clientInfoQuery.getClientInfo.useQuery({
@@ -271,7 +271,6 @@ export default function CarEdit() {
   if (!isStaff && !session) {
     return null;
   } else {
-    //check that staff is from the same outlet as the vehicle
     if (!client) {
       return (
         <div className="flex h-screen items-center justify-center">
