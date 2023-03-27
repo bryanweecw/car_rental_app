@@ -222,6 +222,7 @@ export default function CarEdit() {
               birthdate: (personInfo as Person_profile)?.birthdate,
               gender: (personInfo as Person_profile)?.gender,
               updated_at: (personInfo as Person_profile)?.updated_at,
+              avatar_url: (personInfo as Person_profile)?.avatar_url,
             })
             .eq("user_uid", idtoSubmit);
           const { data: data2, error: error2 } = await supabase
@@ -234,6 +235,7 @@ export default function CarEdit() {
           if (error || error2) {
             toast("Error updating profile");
           }
+          toast("Changes saved!");
         } else {
           toast("You are not authorized to edit this profile");
         }
@@ -248,6 +250,7 @@ export default function CarEdit() {
             birthdate: (personInfo as Person_profile)?.birthdate,
             gender: (personInfo as Person_profile)?.gender,
             updated_at: (personInfo as Person_profile)?.updated_at,
+            avatar_url: (personInfo as Person_profile)?.avatar_url,
           })
           .eq("user_uid", idtoSubmit);
         const { data: data2, error: error2 } = await supabase
@@ -260,6 +263,7 @@ export default function CarEdit() {
         if (error || error2) {
           toast("Error updating profile");
         }
+        toast("Changes saved!");
       }
     }
   };
