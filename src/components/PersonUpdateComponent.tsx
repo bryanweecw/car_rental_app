@@ -3,6 +3,7 @@ import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { toast } from "react-toastify";
 import { date } from "zod";
+import Avatar from "./uploadavatar";
 
 interface Person_profile {
   user_uid: string | undefined;
@@ -101,13 +102,21 @@ export default function PersonUpdateComponent({
                 htmlFor="dropzone-file"
                 className="absolute bottom-0 right-0 mx-auto flex h-48 w-48 items-center justify-center rounded-full bg-gray-700 text-white opacity-0 ring-1 ring-white hover:opacity-70 md:h-56 md:w-56"
               >
-                Change Avatar
-                <input
+                {/* Change Avatar */}
+                {/* <input
                   id="dropzone-file"
                   type="file"
                   className="hidden"
                   onChange={() => {
                     console.log("Updated Photo");
+                  }}
+                /> */}
+                <Avatar
+                  uid={personInfo?.user_uid ?? ""}
+                  url={personInfo?.avatar_url ?? ""}
+                  size={150}
+                  onUpload={(url) => {
+                    setState({ ...personInfo, avatar_url: url });
                   }}
                 />
               </label>
