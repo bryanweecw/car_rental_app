@@ -1,26 +1,25 @@
-import React, { CSSProperties, useCallback, useEffect, useState } from "react";
-import Datepicker from "react-tailwindcss-datepicker";
+import React, {
+  type CSSProperties,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { toast } from "react-toastify";
-import Link from "next/link";
 import {
   useSessionContext,
   useSupabaseClient,
 } from "@supabase/auth-helpers-react";
-import { supabase } from "@supabase/auth-ui-shared";
 import PersonUpdateComponent from "~/components/PersonUpdateComponent";
 import { ClipLoader } from "react-spinners";
 
-import Avatar from "~/components/uploadavatar";
-
 import { useRouter } from "next/router";
-
 
 /* eslint-disable @next/next/no-img-element */
 export default function Account() {
-  type CustomDateRange = {
-    startDate: Date | null;
-    endDate: Date | null;
-  };
+  // type CustomDateRange = {
+  //   startDate: Date | null;
+  //   endDate: Date | null;
+  // };
 
   interface Person_profile {
     user_uid: string | undefined;

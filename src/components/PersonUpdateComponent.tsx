@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { toast } from "react-toastify";
 import { date } from "zod";
-import Avatar from "./uploadavatar";
+import Avatar from "~/components/UploadAvatar";
 
 interface Person_profile {
   user_uid: string | undefined;
@@ -88,7 +88,7 @@ export default function PersonUpdateComponent({
             </button>
           </Link>
           <div className="flex flex-col items-center justify-center">
-            <span className="relative inline-block justify-center">
+            {/* <span className="relative inline-block justify-center">
               <img
                 className="mx-auto h-auto w-48 rounded-full border-2 text-center md:h-56 md:w-56"
                 src={
@@ -100,27 +100,28 @@ export default function PersonUpdateComponent({
               />
               <label
                 htmlFor="dropzone-file"
-                className="absolute bottom-0 right-0 mx-auto flex h-48 w-48 items-center justify-center rounded-full bg-gray-700 text-white opacity-0 ring-1 ring-white hover:opacity-70 md:h-56 md:w-56"
+                className="absolute bottom-0 right-0 mx-auto flex h-48 w-48 items-center justify-center rounded-full bg-gray-700 text-white opacity-70 ring-1 ring-white hover:opacity-70 md:h-56 md:w-56"
               >
-                {/* Change Avatar */}
-                {/* <input
+                 Change Avatar 
+            <input
                   id="dropzone-file"
                   type="file"
                   className="hidden"
                   onChange={() => {
                     console.log("Updated Photo");
                   }}
-                /> */}
-                <Avatar
-                  uid={personInfo?.user_uid ?? ""}
-                  url={personInfo?.avatar_url ?? ""}
-                  size={150}
-                  onUpload={(url) => {
-                    setState({ ...personInfo, avatar_url: url });
-                  }}
                 />
+                
               </label>
-            </span>
+            </span> */}
+            <Avatar
+              uid={personInfo?.user_uid ?? ""}
+              url={personInfo?.avatar_url ?? ""}
+              size={150}
+              onUpload={(url) => {
+                setState({ ...personInfo, avatar_url: url });
+              }}
+            />
 
             <input
               className="mx-2 mt-6 bg-transparent text-center text-2xl font-semibold tracking-tight text-black"

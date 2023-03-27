@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect, useState } from "react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { Database } from "../types/database-raw";
+import { type Database } from "../types/database-raw";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 export default function Avatar({
@@ -19,7 +22,9 @@ export default function Avatar({
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    if (url) downloadImage(url);
+    if (url) {
+      downloadImage(url);
+    }
   }, [url]);
 
   async function downloadImage(path: string) {
@@ -42,7 +47,6 @@ export default function Avatar({
   ) => {
     try {
       setUploading(true);
-
       if (!event.target.files || event.target.files.length === 0) {
         throw new Error("You must select an image to upload.");
       }
@@ -52,7 +56,7 @@ export default function Avatar({
       const fileName = `${uid}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      let { error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from("avatars")
         .upload(filePath, file ?? "", { upsert: true });
 
@@ -71,35 +75,35 @@ export default function Avatar({
 
   return (
     <div>
-      {avatarUrl ? (
-        <img
-          src={avatarUrl}
-          alt="Avatar"
-          className="avatar image"
-          style={{ height: size, width: size }}
-        />
-      ) : (
-        <div
-          className="avatar no-image"
-          style={{ height: size, width: size }}
-        />
-      )}
-      <div style={{ width: size }}>
-        <label className="button primary block" htmlFor="single">
+      <span className="relative inline-block justify-center">
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt="Avatar"
+            className="avatar image mx-auto h-auto w-48 rounded-full border-2 text-center md:h-56 md:w-56"
+          />
+        ) : (
+          <div className="avatar no-image mx-auto h-auto w-48 rounded-full border-2 text-center md:h-56 md:w-56" />
+        )}
+        <label
+          className="absolute bottom-0 right-0 mx-auto flex h-48 w-48 items-center justify-center rounded-full bg-gray-700 text-white opacity-0 ring-1 ring-white hover:opacity-70 md:h-56 md:w-56"
+          htmlFor="single"
+        >
           {uploading ? "Uploading ..." : "Upload"}
+          <input
+            style={{
+              visibility: "hidden",
+              position: "absolute",
+            }}
+            type="file"
+            id="single"
+            accept="image/*"
+            onChange={uploadAvatar}
+            disabled={uploading}
+          />
         </label>
-        <input
-          style={{
-            visibility: "hidden",
-            position: "absolute",
-          }}
-          type="file"
-          id="single"
-          accept="image/*"
-          onChange={uploadAvatar}
-          disabled={uploading}
-        />
-      </div>
+      </span>
+      <div style={{ width: size }}></div>
     </div>
   );
 }
