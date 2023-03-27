@@ -43,8 +43,6 @@ interface PUCProps {
   }) => Promise<void>;
 }
 
-const notify = () => toast("Changes saved!");
-
 export default function PersonUpdateComponent({
   personInfo,
   setState,
@@ -92,7 +90,11 @@ export default function PersonUpdateComponent({
             <span className="relative inline-block justify-center">
               <img
                 className="mx-auto h-auto w-48 rounded-full border-2 text-center md:h-56 md:w-56"
-                src={personInfo?.avatar_url}
+                src={
+                  personInfo?.avatar_url
+                    ? personInfo?.avatar_url
+                    : "https://avataaars.io/?avatarStyle=Circle&topType=WinterHat3&accessoriesType=Prescription01&hatColor=Red&facialHairType=MoustacheMagnum&facialHairColor=BrownDark&clotheType=BlazerSweater&eyeType=Cry&eyebrowType=DefaultNatural&mouthType=Tongue&skinColor=Tanned"
+                }
                 alt="Person Avatar"
               />
               <label
@@ -110,56 +112,56 @@ export default function PersonUpdateComponent({
                 />
               </label>
             </span>
-            <div className="flex flex-row">
-              <input
-                className="mx-2 mt-6 border-2 bg-transparent text-right text-2xl font-semibold tracking-tight text-black"
-                defaultValue={personInfo?.first_name}
-                onBlur={(e) => {
-                  if (e.target && !e.target.value) {
-                    setState({
-                      ...personInfo,
-                      first_name: e.target.value,
-                      user_uid: personInfo?.user_uid || "",
-                    });
-                  }
-                }}
-                onChange={(event) =>
+
+            <input
+              className="mx-2 mt-6 bg-transparent text-center text-2xl font-semibold tracking-tight text-black"
+              defaultValue={personInfo?.first_name}
+              onBlur={(e) => {
+                if (e.target && !e.target.value) {
                   setState({
                     ...personInfo,
-                    first_name: event.target.value,
+                    first_name: e.target.value,
                     user_uid: personInfo?.user_uid || "",
-                  })
+                  });
                 }
-                // placeholder={personInfo?.first_name}
-                placeholder="First Name"
-                id="first_name_input"
-                value={personInfo?.first_name}
-              ></input>
-              <input
-                className="mx-2 mt-6 border-2 bg-transparent text-left text-2xl font-semibold tracking-tight text-black"
-                defaultValue={personInfo?.last_name}
-                onBlur={(e) => {
-                  if (e.target && !e.target.value) {
-                    setState({
-                      ...personInfo,
-                      last_name: e.target.value,
-                      user_uid: personInfo?.user_uid || "",
-                    });
-                  }
-                }}
-                onChange={(event) =>
+              }}
+              onChange={(event) =>
+                setState({
+                  ...personInfo,
+                  first_name: event.target.value,
+                  user_uid: personInfo?.user_uid || "",
+                })
+              }
+              // placeholder={personInfo?.first_name}
+              placeholder="First Name"
+              id="first_name_input"
+              value={personInfo?.first_name}
+            ></input>
+            <input
+              className="mx-2 bg-transparent text-center text-2xl font-semibold tracking-tight text-black"
+              defaultValue={personInfo?.last_name}
+              onBlur={(e) => {
+                if (e.target && !e.target.value) {
                   setState({
                     ...personInfo,
-                    last_name: event.target.value,
+                    last_name: e.target.value,
                     user_uid: personInfo?.user_uid || "",
-                  })
+                  });
                 }
-                // placeholder={personInfo?.last_name}
-                placeholder="Last Name"
-                id="last_name_input"
-                value={personInfo?.last_name}
-              ></input>
-            </div>
+              }}
+              onChange={(event) =>
+                setState({
+                  ...personInfo,
+                  last_name: event.target.value,
+                  user_uid: personInfo?.user_uid || "",
+                })
+              }
+              // placeholder={personInfo?.last_name}
+              placeholder="Last Name"
+              id="last_name_input"
+              value={personInfo?.last_name}
+            ></input>
+
             <p className="text-sm leading-6 text-black">
               {" "}
               {personInfo?.isstaff ? "Staff" : "Client"}{" "}
@@ -322,7 +324,6 @@ export default function PersonUpdateComponent({
                 }
                 // console.log(personInfo);
                 void updateProfile(personInfo);
-                notify();
               }}
               className="self-right my-2 rounded-md bg-indigo-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >

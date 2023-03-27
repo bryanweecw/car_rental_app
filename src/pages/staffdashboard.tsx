@@ -4,6 +4,7 @@ import {
 } from "@supabase/auth-helpers-react";
 import { type NextRouter, useRouter } from "next/router";
 import { useState, useEffect, useCallback } from "react";
+import ClientManagementTable from "~/components/ClientManagementTable";
 import FleetManagementTable from "~/components/FleetManagementTable";
 import HireAgreementTable from "~/components/HireAgreementTable";
 import TabBar from "~/components/TabBar";
@@ -95,7 +96,7 @@ export default function StaffDashboard() {
                 ) : activeTab === "fleet_management" ? (
                   <FleetManagementTable id={session?.user.id as string} />
                 ) : activeTab === "client_management" ? (
-                  <div>Client Management</div>
+                  <ClientManagementTable />
                 ) : activeTab === "billing" ? (
                   <div>Billing</div>
                 ) : (

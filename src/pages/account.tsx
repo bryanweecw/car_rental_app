@@ -9,6 +9,7 @@ import {
 import { supabase } from "@supabase/auth-ui-shared";
 import PersonUpdateComponent from "~/components/PersonUpdateComponent";
 import { ClipLoader } from "react-spinners";
+import { useRouter } from "next/router";
 
 /* eslint-disable @next/next/no-img-element */
 export default function Account() {
@@ -33,9 +34,17 @@ export default function Account() {
   }
 
   const { session, isLoading } = useSessionContext();
+  const router = useRouter();
 
   const [issetup, setIsSetUp] = useState(false);
   const supabase = useSupabaseClient();
+  useEffect(() => {
+    if (!isLoading && !session) {
+      if (!session) {
+        void router.push("/login");
+      }
+    }
+  }, [session, isLoading, supabase, router]);
 
   const getProfileInfo = useCallback(async () => {
     try {
@@ -115,31 +124,12 @@ export default function Account() {
           ?.driving_license_number,
       })
       .eq("user_uid", id);
+    if (!error && !error2) {
+      toast("Changes saved!");
+    } else {
+      toast("Something went wrong. Please try again.");
+    }
   };
-
-  // const updateDrivingLicense = async (personInfo: {
-  //   user_uid: any;
-  //   avatar_url: any;
-  //   updated_at: any;
-  //   first_name: any;
-  //   last_name: any;
-  //   address: any;
-  //   phone_number: any;
-  //   birthdate: any;
-  //   gender: any;
-  //   isstaff: any;
-  //   issetup: any;
-  //   driving_license_number: any;
-  // }) => {
-  //   const { user } = session ?? {};
-  //   const { id } = user ?? {};
-  //   const { data, error } = await supabase
-  //     .from("client")
-  //     .update({
-  //       driving_license_number: personInfo?.driving_license_number,
-  //     })
-  //     .eq("user_uid", id);
-  // };
 
   const [current_person, setCurrentPerson] = useState<Person_profile>();
 
@@ -151,32 +141,6 @@ export default function Account() {
   }, [getProfileInfo, isLoading, session, supabase]);
 
   console.log(current_person);
-
-  // const [avatar_url, setAvatarUrl] = useState(current_person?.avatar_url);
-
-  // const [first_name, setFirstName] = useState(current_person?.first_name);
-
-  // const [last_name, setLastName] = useState(current_person?.last_name);
-
-  // const [address, setAddress] = useState(current_person?.address);
-
-  // const [phone_number, setPhoneNumber] = useState(current_person?.phone_number);
-
-  // const [DOBvalue, setDOBValue] = useState<CustomDateRange>({
-  //   startDate: current_person?.birthdate ?? null,
-  //   endDate: null,
-  // });
-
-  // const handleValueChange = (newDOBValue: CustomDateRange) => {
-  //   setDOBValue(newDOBValue);
-  // };
-
-  // const [gender, setGender] = useState(current_person?.gender);
-
-  //need to use condition of issetup to trigger updating of profile, but how does
-  // redirection work
-  // either ways, for now, should return the value of the right profile
-  // maybe i should update in getprofileinfo function and decalre all as null to begin with
 
   const [loading, setLoading] = useState(true);
   const [color, setColor] = useState("#ffffff");
@@ -198,7 +162,6 @@ export default function Account() {
             />
           </div>
         </div>
-        );
       </>
     );
   } else {
