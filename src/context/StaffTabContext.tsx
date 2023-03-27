@@ -14,7 +14,8 @@ export type StaffTabSelectionString =
   | "hire_agreements"
   | "fleet_management"
   | "client_management"
-  | "billing";
+  | "billing"
+  | "to_do";
 
 const StaffTabContext = createContext<StaffTabContextType>({
   activeTab: "hire_agreements",

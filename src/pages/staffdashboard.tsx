@@ -3,12 +3,13 @@ import {
   useSessionContext,
 } from "@supabase/auth-helpers-react";
 import { type NextRouter, useRouter } from "next/router";
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ClientManagementTable from "~/components/ClientManagementTable";
 import FleetManagementTable from "~/components/FleetManagementTable";
 import HireAgreementTable from "~/components/HireAgreementTable";
 import TabBar from "~/components/TabBar";
 import { useStaffTabContext } from "~/context/StaffTabContext";
+import StaffToDo from "~/components/StaffToDo";
 
 export default function StaffDashboard() {
   const { activeTab } = useStaffTabContext();
@@ -99,6 +100,8 @@ export default function StaffDashboard() {
                   <ClientManagementTable />
                 ) : activeTab === "billing" ? (
                   <div>Billing</div>
+                ) : activeTab === "to_do" ? (
+                  <StaffToDo />
                 ) : (
                   <></>
                 )}
