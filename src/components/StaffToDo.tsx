@@ -108,7 +108,7 @@ export default function StaffToDo() {
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
                     {data?.map((task) => (
-                      <tr key={task.id}>
+                      <tr key={task?.id as string}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
                           {task.description}
                         </td>
@@ -127,7 +127,7 @@ export default function StaffToDo() {
                             onClick={(e) => {
                               e.preventDefault();
                               void handleSubmit(task);
-                              refetch();
+                              void refetch();
                               toast("Good Job! Task Completed!");
                             }}
                             className="self-right my-2 rounded-md bg-green-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

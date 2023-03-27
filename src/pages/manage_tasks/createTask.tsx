@@ -38,7 +38,7 @@ interface concreteTaskType {
   staff_id: string;
   is_done: boolean;
   created_by: string;
-  complete_by: Date;
+  complete_by: string;
   id: string;
   created_on: string;
 }
@@ -53,7 +53,7 @@ function formatDate(inputDate: string): string {
   const day = parts[0];
   const month = parts[1];
   const year = parts[2];
-  const formattedDate = `${year}-${month}-${day}`;
+  const formattedDate = `${year as string}-${month as string}-${day as string}`;
   return formattedDate;
 }
 
@@ -61,7 +61,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function taskEdit() {
+export default function TaskEdit() {
   const { session, isLoading: isSessionLoading } = useSessionContext();
   const { user } = session ?? {};
   const { id } = user ?? {};
@@ -91,7 +91,7 @@ export default function taskEdit() {
   });
 
   const handleSubmit = (input: taskType) => {
-    mutate(input as concreteTaskType);
+    mutate(input as unknown as concreteTaskType);
   };
 
   return (
