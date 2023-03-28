@@ -326,10 +326,6 @@ export default function PersonUpdateComponent({
                   personInfo?.gender != "" &&
                   personInfo?.driving_license_number != ""
                 ) {
-                  setState({
-                    ...personInfo,
-                    updated_at: new Date().toLocaleString(),
-                  });
                   void updateProfile(personInfo);
                 } else {
                   toast("Changes not saved, please complete all fields!");

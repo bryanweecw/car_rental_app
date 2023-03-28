@@ -110,6 +110,7 @@ export default function Account() {
     driving_license_number: any;
   }) => {
     let setup = false;
+    let updated_at_local = new Date().toLocaleDateString();
     if (
       personInfo?.first_name != null &&
       personInfo?.last_name != null &&
@@ -139,7 +140,7 @@ export default function Account() {
         phone_number: (personInfo as Person_profile)?.phone_number,
         birthdate: (personInfo as Person_profile)?.birthdate,
         gender: (personInfo as Person_profile)?.gender,
-        updated_at: (personInfo as Person_profile)?.updated_at,
+        updated_at: updated_at_local,
         avatar_url: (personInfo as Person_profile)?.avatar_url,
         issetup: setup,
       })
