@@ -310,10 +310,6 @@ export default function PersonUpdateComponent({
               type="button"
               onClick={(e) => {
                 e.preventDefault();
-                setState({
-                  ...personInfo,
-                  updated_at: new Date().toLocaleString(),
-                });
                 if (
                   personInfo?.first_name != null &&
                   personInfo?.last_name != null &&
@@ -330,8 +326,11 @@ export default function PersonUpdateComponent({
                   personInfo?.gender != "" &&
                   personInfo?.driving_license_number != ""
                 ) {
-                  setState({ ...personInfo, issetup: true });
-                  void updateProfile({ ...personInfo, issetup: true });
+                  setState({
+                    ...personInfo,
+                    updated_at: new Date().toLocaleString(),
+                  });
+                  void updateProfile(personInfo);
                 } else {
                   toast("Changes not saved, please complete all fields!");
                 }
