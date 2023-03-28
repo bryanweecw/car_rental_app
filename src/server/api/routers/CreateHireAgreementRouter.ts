@@ -2,6 +2,7 @@ import { randomInt } from "crypto";
 import { z } from "zod";
 import { supabaseClient } from "../../sharedinstance";
 import { createTRPCRouter, publicProcedure } from "../trpc";
+import { v4 as uuidv4 } from "uuid";
 
 const HireAgreementCreationDataSchema = z.object({
   amount: z.number(),
@@ -19,7 +20,7 @@ export const createHireAgreementRouter = createTRPCRouter({
       const { data: transactionData, error: transactionError } =
         await supabaseClient
           .from("transaction")
-          .insert({ amount: input.amount })
+          .insert({ amount: input.amount, checkout_session_id: uuidv4() })
           .select("*");
       if (transactionError) {
         console.log(transactionError);
@@ -57,6 +58,7 @@ export const createHireAgreementRouter = createTRPCRouter({
               staff_uid: staffAssigned,
               date_start: input.date_start,
               date_end: input.date_end,
+              checkout_session_id: uuidv4(),
             })
             .select("*");
 
