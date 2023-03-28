@@ -10,6 +10,7 @@ const HireAgreementCreationDataSchema = z.object({
   date_start: z.string(),
   date_end: z.string(),
   outlet_uid: z.number(),
+  checkout_session_id: z.string(),
 });
 
 export const createHireAgreementRouter = createTRPCRouter({
@@ -19,7 +20,10 @@ export const createHireAgreementRouter = createTRPCRouter({
       const { data: transactionData, error: transactionError } =
         await supabaseClient
           .from("transaction")
-          .insert({ amount: input.amount })
+          .insert({
+            amount: input.amount,
+            checkout_session_id: input.checkout_session_id,
+          })
           .select("*");
       if (transactionError) {
         console.log(transactionError);
@@ -57,6 +61,7 @@ export const createHireAgreementRouter = createTRPCRouter({
               staff_uid: staffAssigned,
               date_start: input.date_start,
               date_end: input.date_end,
+              checkout_session_id: input.checkout_session_id,
             })
             .select("*");
 

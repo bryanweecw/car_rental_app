@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import React, { type CSSProperties, useState } from "react";
+import React, { type CSSProperties, useState, FormEvent } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { toast } from "react-toastify";
 import { useSession } from "@supabase/auth-helpers-react";
@@ -15,6 +15,9 @@ import { api } from "~/utils/api";
 import { supabaseClient } from "~/server/sharedinstance";
 import superjson from "superjson";
 import ClipLoader from "react-spinners/ClipLoader";
+import input from "postcss/lib/input";
+import Stripe from "stripe";
+import getStripe from "~/utils/stripe-js";
 
 interface HAInvalidType {
   date_start: string;
@@ -40,6 +43,15 @@ interface CarType {
   vehicle_registration_number: string;
   outlet: { outlet_id: number; location: string };
 } //declare type to be used in getStaticProps
+
+interface dataObjectType {
+  vehicle_registration_number: string;
+  client_uid: string;
+  date_start: string;
+  date_end: string;
+  amount: number;
+  outlet_uid: number;
+}
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ carid: string }>
@@ -180,7 +192,7 @@ export default function Car(
         amount: getTotalPrice(value.startDate, value.endDate, car[0].hire_rate),
         outlet_uid: car[0].outlet.outlet_id,
       };
-      mutate(dataObject);
+      void handleSubmit(dataObject);
     } else if (session == null) {
       toast("Please log in or create an account!");
     } else if (
@@ -244,6 +256,66 @@ export default function Car(
       </div>
     );
   }
+
+  // Partial of ./components/CheckoutForm.tsx
+  // ...
+
+  async function fetchPostJSON(url: string, data?: object) {
+    try {
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *client
+        body: JSON.stringify(data || {}), // body data type must match "Content-Type" header
+      });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return await response.json(); // parses JSON response into native JavaScript objects
+    } catch (err) {
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
+      throw err;
+    }
+  }
+  const handleSubmit = async (dataSubmitted: dataObjectType) => {
+    // Create a Checkout Session.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
+    const checkoutSession: Stripe.Checkout.Session = await fetchPostJSON(
+      "/api/checkout_sessions",
+      dataSubmitted
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    );
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if ((checkoutSession as any).statusCode === 500) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      console.error((checkoutSession as any).message);
+      return;
+    }
+
+    // Redirect to Checkout.
+    const stripe = await getStripe();
+    const { error } = await stripe!.redirectToCheckout({
+      // Make the id field from the Checkout Session creation API response
+      // available to this file, so you can provide it as parameter here
+      // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      sessionId: checkoutSession.id,
+    });
+    // If `redirectToCheckout` fails due to a browser or network
+    // error, display the localized error message to your customer
+    // using `error.message`.
+    console.warn(error.message);
+  };
+  // ...
 
   const { data } = postQuery;
   const car = data as unknown as CarType[];
@@ -340,7 +412,7 @@ export default function Car(
             type="button"
             onClick={(e) => {
               e.preventDefault();
-              notify();
+              void notify();
             }}
             className="mb-2 block w-full rounded border-2 px-6 pt-2 pb-[6px] text-xs font-medium uppercase leading-normal transition duration-150 ease-in-out hover:border-gray-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-gray-600 focus:border-gray-600 focus:text-gray-600 focus:outline-none focus:ring-0 active:bg-gray-700 active:text-white dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
           >
