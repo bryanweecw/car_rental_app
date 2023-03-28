@@ -51,8 +51,6 @@ export default function StaffDashboard() {
       const isStaffLocal = Boolean(profileRes.data?.[0]?.isstaff);
       // we extract the boolean flag from the return value of the query
 
-      console.log(profileRes);
-
       const staffNameLocal =
         String((profileRes.data?.[0] as profileResType).first_name) +
         " " +
