@@ -111,6 +111,7 @@ export default function Account() {
   }) => {
     let setup = false;
     let updated_at_local = new Date().toLocaleDateString();
+    console.log("before update updated_at", updated_at_local);
     if (
       personInfo?.first_name != null &&
       personInfo?.last_name != null &&
@@ -157,6 +158,7 @@ export default function Account() {
     } else {
       toast("Something went wrong. Please try again.");
     }
+    console.log("after update updated_at", updated_at_local);
   };
 
   const [current_person, setCurrentPerson] = useState<Person_profile>();
