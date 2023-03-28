@@ -110,7 +110,7 @@ export default function Account() {
     driving_license_number: any;
   }) => {
     let setup = false;
-    const updated_at_local = new Date().toDateString();
+    const updated_at_local = new Date().toLocaleString();
     // console.log("before update updated_at", updated_at_local);
     if (
       personInfo?.first_name != null &&
