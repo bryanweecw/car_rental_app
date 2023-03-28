@@ -109,6 +109,27 @@ export default function Account() {
     issetup: any;
     driving_license_number: any;
   }) => {
+    let setup = false;
+    const updated_at_local = new Date().toLocaleString();
+    // console.log("before update updated_at", updated_at_local);
+    if (
+      personInfo?.first_name != null &&
+      personInfo?.last_name != null &&
+      personInfo?.address != null &&
+      personInfo?.phone_number != null &&
+      personInfo?.birthdate != null &&
+      personInfo?.gender != null &&
+      personInfo?.driving_license_number != null &&
+      personInfo?.first_name != "" &&
+      personInfo?.last_name != "" &&
+      personInfo?.address != "" &&
+      personInfo?.phone_number != "" &&
+      (personInfo?.birthdate as Date).toString() != "" &&
+      personInfo?.gender != "" &&
+      personInfo?.driving_license_number != ""
+    ) {
+      setup = true;
+    }
     const { user } = session ?? {};
     const { id } = user ?? {};
     const { data, error } = await supabase
@@ -120,8 +141,9 @@ export default function Account() {
         phone_number: (personInfo as Person_profile)?.phone_number,
         birthdate: (personInfo as Person_profile)?.birthdate,
         gender: (personInfo as Person_profile)?.gender,
-        updated_at: (personInfo as Person_profile)?.updated_at,
+        updated_at: updated_at_local,
         avatar_url: (personInfo as Person_profile)?.avatar_url,
+        issetup: setup,
       })
       .eq("user_uid", id);
     const { data: data2, error: error2 } = await supabase

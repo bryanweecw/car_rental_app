@@ -118,10 +118,20 @@ export default function StaffDashboard() {
                   Dashboard
                 </h1> */}
                 <h1 className="mb-2 text-3xl font-light leading-tight tracking-tight text-gray-900">
-                  Welcome to your Dashboard, <br />
-                  {staffName}
+                  Welcome to your Dashboard <br />
+                  {staffName &&
+                  staffName != "" &&
+                  staffName != "null" &&
+                  staffName != "null null"
+                    ? staffName
+                    : ""}
                 </h1>
-                <span className="text-md">Outlet: {location}</span>
+                <span className="text-md">
+                  Outlet:{" "}
+                  {location && location != "" && location != "null"
+                    ? location
+                    : "Smiles Rental"}
+                </span>
               </div>
             </header>
             <main>
