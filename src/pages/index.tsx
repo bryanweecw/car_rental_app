@@ -84,7 +84,7 @@ const Home = (props: HomeProps) => {
   const results = fuse.search(query);
   const carResult = query
     ? results.map((result) => {
-        result.item;
+        return result.item;
       })
     : cars_available;
 
