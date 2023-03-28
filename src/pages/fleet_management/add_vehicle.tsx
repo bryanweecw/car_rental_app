@@ -23,6 +23,21 @@ interface CarType {
 export default function VehicleAdd() {
   const [car, setCar] = useState({} as CarType);
 
+  const outlets = [
+    {
+      outlet_id: 1929,
+      location: "50 Kallang Ave, #01-01, Singapore 339505",
+    },
+    {
+      outlet_id: 1028,
+      location: "1 Kim Seng Promenade, #01-01, Singapore 237994",
+    },
+    {
+      outlet_id: 1050,
+      location: "10 Bayfront Avenue, #01-01, Singapore 018956",
+    },
+  ];
+
   const { mutate, isLoading } = api.addCarRouter.CarAdd.useMutation({
     onSuccess: (res) => {
       console.log(res);
@@ -230,16 +245,28 @@ export default function VehicleAdd() {
             >
               Outlet ID
             </label>
-            <input
-              type="text"
-              name="outlet-id"
-              id="outlet-id"
-              value={isNaN(car?.outlet_id) ? "" : car?.outlet_id}
+            <select
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               onChange={(e) =>
                 setCar({ ...car, outlet_id: parseInt(e.target.value) })
               }
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
+              value={isNaN(car?.outlet_id) ? "" : car?.outlet_id}
+            >
+              {outlets.map((outlet) => {
+                if (outlet.outlet_id === car?.outlet_id)
+                  return (
+                    <option selected value={outlet.outlet_id}>
+                      {outlet.outlet_id}: {outlet.location}
+                    </option>
+                  );
+                else
+                  return (
+                    <option value={outlet.outlet_id}>
+                      {outlet.outlet_id}: {outlet.location}
+                    </option>
+                  );
+              })}
+            </select>
           </div>
         </div>
 
