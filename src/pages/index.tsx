@@ -132,40 +132,57 @@ const Home = (props: HomeProps) => {
             ))}
           </div>
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {carResult?.map((car) => (
-              <div key={car?.id} className="group relative">
-                <div className="aspect-w-1 aspect-h-1 lg:aspect-none h-80 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
-                  <img
-                    src={car?.imagesrc !== null ? car?.imagesrc : ""}
-                    alt={car?.imagealt !== null ? car?.imagealt : ""}
-                    className="g:h-full h-full w-full object-contain object-center lg:w-full"
-                  />
-                </div>
-                <div className="mt-4 flex justify-between">
-                  <div>
-                    <h3 className="text-sm text-gray-700">
-                      <Link
-                        href={`/cars/${
-                          car?.id && car?.id !== undefined
-                            ? car?.id.toString()
-                            : ""
-                        }`}
-                      >
-                        <span aria-hidden="true" className="absolute inset-0" />
-                        {car?.vehicle_make} {car?.vehicle_model}
-                      </Link>
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-500">{car?.color}</p>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {(car?.outlet as unknown as OutletInfo)?.location}
+            {carResult
+              ?.sort((a, b) => {
+                const nameA = (a.vehicle_make as string).toUpperCase(); // ignore upper and lowercase
+                const nameB = (b.vehicle_make as string).toUpperCase(); // ignore upper and lowercase
+                if (nameA < nameB) {
+                  return -1;
+                }
+                if (nameA > nameB) {
+                  return 1;
+                }
+
+                // names must be equal
+                return 0;
+              })
+              .map((car) => (
+                <div key={car?.id} className="group relative">
+                  <div className="aspect-w-1 aspect-h-1 lg:aspect-none h-80 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
+                    <img
+                      src={car?.imagesrc !== null ? car?.imagesrc : ""}
+                      alt={car?.imagealt !== null ? car?.imagealt : ""}
+                      className="g:h-full h-full w-full object-contain object-center lg:w-full"
+                    />
+                  </div>
+                  <div className="mt-4 flex justify-between">
+                    <div>
+                      <h3 className="text-sm text-gray-700">
+                        <Link
+                          href={`/cars/${
+                            car?.id && car?.id !== undefined
+                              ? car?.id.toString()
+                              : ""
+                          }`}
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="absolute inset-0"
+                          />
+                          {car?.vehicle_make} {car?.vehicle_model}
+                        </Link>
+                      </h3>
+                      <p className="mt-1 text-sm text-gray-500">{car?.color}</p>
+                      <p className="mt-1 text-sm text-gray-500">
+                        {(car?.outlet as unknown as OutletInfo)?.location}
+                      </p>
+                    </div>
+                    <p className="text-sm font-medium text-gray-900">
+                      ${car?.hire_rate}/day
                     </p>
                   </div>
-                  <p className="text-sm font-medium text-gray-900">
-                    ${car?.hire_rate}/day
-                  </p>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
