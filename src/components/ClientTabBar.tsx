@@ -39,14 +39,14 @@ export default function ClientTabBar() {
   }, [activeTab]);
   return (
     <div className="mt-5 grid">
-      <div className="sm:hidden">
+      <div className="place-self-center sm:hidden md:w-2/5 custxs:w-4/5 custsm:w-4/5 custmd:w-3/5">
         <label htmlFor="tabs" className="sr-only">
           Select a tab
         </label>
         <select
           id="tabs"
           name="tabs"
-          className="block place-self-center rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 md:w-2/5 custxs:w-4/5 custsm:w-4/5 custmd:w-3/5"
+          className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 "
           defaultValue={tabs.find((tab) => tab.value == activeTab)?.value}
           onChange={(e) =>
             setActiveTab(e.target.value as ClientTabSelectionString)
@@ -59,7 +59,7 @@ export default function ClientTabBar() {
           ))}
         </select>
       </div>
-      <div className="hidden place-self-center sm:block md:w-2/5 custxs:w-4/5  custsm:w-4/5 custmd:w-3/5 ">
+      <div className="hidden cursor-pointer place-self-center sm:block md:w-2/5 custxs:w-4/5  custsm:w-4/5 custmd:w-3/5 ">
         <nav
           className="isolate flex divide-x divide-gray-200 rounded-lg shadow"
           aria-label="Tabs"
