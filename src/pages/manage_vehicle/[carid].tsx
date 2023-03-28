@@ -34,7 +34,6 @@ export default function CarEdit() {
   const supabase = useSupabaseClient();
   const router = useRouter();
 
-  const [isStaff, setIsStaff] = useState(false);
   const [outletID, setOutletID] = useState(0);
 
   const { session, isLoading } = useSessionContext();
@@ -46,6 +45,7 @@ export default function CarEdit() {
     margin: "0 auto",
     borderColor: "red",
   };
+  const [isStaff, setIsStaff] = useState(false);
 
   function redirectToHome(router: NextRouter) {
     void router.push("/");
