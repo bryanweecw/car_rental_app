@@ -148,7 +148,7 @@ export default function FleetManagementTable({ id }: FATProps) {
                         <span className="sr-only">{vehicle.id}</span>
                       </Link>
                       <span
-                        className="ml-5 text-red-600 hover:text-red-900"
+                        className="ml-5 cursor-pointer text-red-600 hover:text-red-900"
                         onClick={() => {
                           mutate({ text: vehicle.vehicle_registration_number });
                         }}

@@ -26,24 +26,35 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2020-08-27",
 });
 
+interface dataObjectType {
+  vehicle_registration_number: string;
+  client_uid: string;
+  date_start: string;
+  date_end: string;
+  amount: number;
+  outlet_uid: number;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const amount = 1;
+    const amount = (req.body as dataObjectType).amount;
     try {
       // Validate the amount that was passed from the client.
-      if (!(amount >= 0 && amount <= 100)) {
+      if (!(amount >= 1 && amount <= 99999999)) {
         throw new Error("Invalid amount.");
       }
       // Create Checkout Sessions from body params
       const params: Stripe.Checkout.SessionCreateParams = {
-        submit_type: "donate",
+        submit_type: "pay",
         payment_method_types: ["card"],
         line_items: [
           {
-            name: "Custom amount donation",
+            name:
+              "Hire Agreement for " +
+              (req.body as dataObjectType).vehicle_registration_number,
             amount: formatAmountForStripe(amount, "SGD"),
             currency: "SGD",
             quantity: 1,
