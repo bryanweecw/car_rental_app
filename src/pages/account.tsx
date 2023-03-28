@@ -181,6 +181,15 @@ export default function Account() {
   const { activeTab, setActiveTab } = useClientTabContext();
 
   useEffect(() => {
+    if (
+      router.query.tab === "hire_agreements" ||
+      router.query.tab === "profile"
+    ) {
+      setActiveTab(router.query.tab);
+    }
+  }, [router.query.tab]);
+
+  useEffect(() => {
     const selectElement = document.getElementById("tabs") as HTMLSelectElement;
 
     if (selectElement) {

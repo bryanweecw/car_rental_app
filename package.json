@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.16",
+    "@stripe/stripe-js": "^1.52.0",
     "@supabase/auth-helpers-nextjs": "^0.5.6",
     "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/auth-ui-react": "^0.3.5",
@@ -30,8 +31,10 @@
     "react-spinners": "^0.13.8",
     "react-tailwindcss-datepicker": "^1.5.0",
     "react-toastify": "^9.1.1",
+    "stripe": "^11.16.0",
     "supabase": "^1.45.2",
     "superjson": "1.9.1",
+    "swr": "^2.1.1",
     "ts-node": "^10.9.1",
     "tsx": "^3.12.3",
     "uuid": "^9.0.0",
