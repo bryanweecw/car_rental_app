@@ -32,6 +32,8 @@ export default function StaffToDo() {
 
   const { mutate, isLoading } = api.addTaskRouter.deletetask.useMutation({
     onSuccess: (res) => {
+      toast("Good Job! Task Completed!");
+      void refetch();
       console.log("success", res);
     },
     onError: (err) => {
@@ -127,8 +129,6 @@ export default function StaffToDo() {
                             onClick={(e) => {
                               e.preventDefault();
                               void handleSubmit(task);
-                              void refetch();
-                              toast("Good Job! Task Completed!");
                             }}
                             className="self-right my-2 rounded-md bg-green-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                           >

@@ -306,6 +306,8 @@ export default function TaskEdit() {
                 if (
                   formState?.description != "" &&
                   formState?.importance != "" &&
+                  formState?.description &&
+                  formState?.importance &&
                   formState?.complete_by != undefined
                 ) {
                   void handleSubmit(formState);

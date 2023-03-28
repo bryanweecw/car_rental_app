@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
+import { toast } from "react-toastify";
 import Avatar from "~/components/UploadAvatar";
 
 interface Person_profile {
@@ -325,12 +326,21 @@ export default function PersonUpdateComponent({
                   personInfo?.phone_number != null &&
                   personInfo?.birthdate != null &&
                   personInfo?.gender != null &&
-                  personInfo?.driving_license_number != null
+                  personInfo?.driving_license_number != null &&
+                  personInfo?.first_name != "" &&
+                  personInfo?.last_name != "" &&
+                  personInfo?.address != "" &&
+                  personInfo?.phone_number != "" &&
+                  personInfo?.birthdate.toString() != "" &&
+                  personInfo?.gender != "" &&
+                  personInfo?.driving_license_number != ""
                 ) {
                   setState({ ...personInfo, issetup: true });
+                  void updateProfile(personInfo);
+                } else {
+                  toast("Changes not saved, please complete all fields!");
                 }
                 // console.log(personInfo);
-                void updateProfile(personInfo);
               }}
               className="self-right my-2 rounded-md bg-indigo-600 py-2.5 px-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
