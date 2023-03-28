@@ -331,7 +331,7 @@ export default function PersonUpdateComponent({
                   personInfo?.driving_license_number != ""
                 ) {
                   setState({ ...personInfo, issetup: true });
-                  void updateProfile(personInfo);
+                  void updateProfile({ ...personInfo, issetup: true });
                 } else {
                   toast("Changes not saved, please complete all fields!");
                 }
