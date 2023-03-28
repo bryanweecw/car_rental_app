@@ -40,7 +40,6 @@ export default function VehicleAdd() {
 
   const { mutate, isLoading } = api.addCarRouter.CarAdd.useMutation({
     onSuccess: (res) => {
-      console.log(res);
       if (res?.code) {
         toast("Failed to add Vehicle");
       } else {
@@ -298,7 +297,6 @@ export default function VehicleAdd() {
           type="button"
           onClick={(e) => {
             e.preventDefault();
-            console.log(car);
             const hasNoNullValues = Object.values(car).every(
               (value) => value != null && value != undefined
             );

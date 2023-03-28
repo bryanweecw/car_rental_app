@@ -38,7 +38,6 @@ export default function HireAgreementTable({ id }: HATProps) {
     api.RetrieveClientHireAgreements.RetrieveClientHireAgreements.useQuery({
       text: id,
     });
-  console.log(data);
 
   function getPeriodStatus(datestart: string, dateend: string) {
     if (datestart == "" || dateend == "") {

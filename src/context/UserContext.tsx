@@ -27,7 +27,6 @@ export default function UserContextWrapper({ children }: Props) {
 
   const userLogOut = () => {
     setRole("unauthenticated");
-    console.log(role);
   };
 
   const sharedState = {

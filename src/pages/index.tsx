@@ -88,8 +88,6 @@ const Home = (props: HomeProps) => {
       })
     : cars_available;
 
-  console.log(outletSelected);
-
   return (
     <>
       <Head>

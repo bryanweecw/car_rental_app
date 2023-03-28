@@ -60,9 +60,6 @@ export default function PersonUpdateComponent({
     }
   };
 
-  console.log(personInfo?.birthdate);
-  console.log(typeof personInfo?.birthdate);
-
   return (
     <>
       <div className="grid">
@@ -293,8 +290,6 @@ export default function PersonUpdateComponent({
                 value={DOBvalue.startDate}
                 onChange={(event: CustomDateRange) => {
                   handleValueChange(event);
-                  //   console.log(DOBvalue.startDate);s
-                  //   updateBirthdateState();
                 }}
                 useRange={false}
                 inputClassName="shadow-md"

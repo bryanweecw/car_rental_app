@@ -220,7 +220,6 @@ export default function Agreement() {
           );
         } else {
           void router.push("/");
-          console.log("reached");
           return <></>;
         }
       }

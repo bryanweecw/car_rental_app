@@ -65,7 +65,6 @@ export default function TaskEdit() {
   const { session, isLoading: isSessionLoading } = useSessionContext();
   const { user } = session ?? {};
   const { id } = user ?? {};
-  // console.log("id is", id);
 
   const [formState, setFormState] = useState<taskType>();
 
@@ -83,9 +82,10 @@ export default function TaskEdit() {
 
   const { mutate, isLoading } = api.addTaskRouter.addtask.useMutation({
     onSuccess: (res) => {
-      console.log("success", res);
+      toast("Good Job! Task Created!");
     },
     onError: (err) => {
+      toast("Error! Task Not Created!");
       console.log("ERROR", err);
     },
   });
@@ -301,8 +301,6 @@ export default function TaskEdit() {
               type="button"
               onClick={(e) => {
                 e.preventDefault();
-                console.log("id_on_press", id?.toString());
-                console.log("formState in button", formState);
                 if (
                   formState?.description != "" &&
                   formState?.importance != "" &&
@@ -311,7 +309,6 @@ export default function TaskEdit() {
                   formState?.complete_by != undefined
                 ) {
                   void handleSubmit(formState);
-                  toast("Task Added");
                   setFormState({
                     ...formState,
                     description: "",

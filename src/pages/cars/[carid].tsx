@@ -155,9 +155,10 @@ export default function Car(
   const { mutate, isLoading } =
     api.hireAgreementCreationMutation.HireAgreementCreation.useMutation({
       onSuccess: (res) => {
-        console.log(res);
+        toast("Booking successful!");
       },
       onError: (err) => {
+        toast("Hire Agreement Creation Failed");
         console.log(err);
       },
     });
@@ -180,8 +181,6 @@ export default function Car(
         outlet_uid: car[0].outlet.outlet_id,
       };
       mutate(dataObject);
-      console.log(dataObject);
-      toast("Booking successful!");
     } else if (session == null) {
       toast("Please log in or create an account!");
     } else if (

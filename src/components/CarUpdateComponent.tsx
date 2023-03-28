@@ -42,10 +42,11 @@ export default function CarUpdateComponent({ vehicleInfo }: CUCProps) {
   ];
   const { mutate, isLoading } = api.mutateCarRouter.CarUpdate.useMutation({
     onSuccess: (res) => {
-      console.log(res);
+      toast("Updated Vehicle successfully");
     },
     onError: (err) => {
       console.log(err);
+      toast("Failed to update Vehicle, check console for errors");
     },
   });
   return (
@@ -295,7 +296,6 @@ export default function CarUpdateComponent({ vehicleInfo }: CUCProps) {
           type="button"
           onClick={(e) => {
             e.preventDefault();
-            console.log(car);
             const hasNoNullValues = Object.values(car).every(
               (value) => value != null && value != undefined
             );

@@ -39,12 +39,10 @@ export default function HireAgreementTable({ id }: HATProps) {
     api.RetrieveAllHireAgreements.RetrieveAllHireAgreements.useQuery({
       text: id,
     });
-  console.log(data);
 
   const { mutate, isLoading } =
     api.DeleteHireAgreement.HireAgreementDelete.useMutation({
       onSuccess: (res) => {
-        console.log(res);
         toast("Hire Agreement Deleted");
         void refetch();
       },

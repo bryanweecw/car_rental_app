@@ -34,7 +34,6 @@ export default function StaffToDo() {
     onSuccess: (res) => {
       toast("Good Job! Task Completed!");
       void refetch();
-      console.log("success", res);
     },
     onError: (err) => {
       console.log("ERROR", err);

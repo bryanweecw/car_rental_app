@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { api } from "~/utils/api";
 
 interface SHAVProps {
@@ -68,9 +69,9 @@ export default function StaffHireAgreementView({
     api.hireAgreementUpdateMutation.HireAgreementUpdate.useMutation({
       onSuccess: (res) => {
         onAgreementChange();
-        console.log(res);
       },
       onError: (err) => {
+        toast("Failed to update Hire Agreement");
         console.log(err);
       },
     });
@@ -314,7 +315,6 @@ export default function StaffHireAgreementView({
             //   vehicle,
             //   ...queryInputData
             // } = formData;
-            console.log(queryInputData);
 
             if (
               queryInputData.date_end != null &&

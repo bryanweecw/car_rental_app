@@ -23,7 +23,6 @@ interface ClientProfile {
 
 export default function ClientManagementTable() {
   const { data } = api.retrieveAllClients.RetrieveAllClients.useQuery();
-  console.log(data);
 
   return (
     <div className="rounded-md border py-10 px-4 sm:px-6 lg:px-8">

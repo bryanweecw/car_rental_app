@@ -39,11 +39,9 @@ export default function FleetManagementTable({ id }: FATProps) {
     api.RetrieveAllOutletVehicles.RetrieveAllOutletVehicles.useQuery({
       text: id,
     });
-  console.log(data);
 
   const { mutate, isLoading } = api.DeleteVehicle.VehicleDelete.useMutation({
     onSuccess: (res) => {
-      console.log(res);
       toast("Vehicle Deleted");
       void refetch();
     },

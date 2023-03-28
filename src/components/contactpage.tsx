@@ -3,6 +3,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Switch } from "@headlessui/react";
 import Link from "next/link";
 import { api } from "~/utils/api";
+import { toast } from "react-toastify";
 
 function classNames(...classes: unknown[]) {
   return classes.filter(Boolean).join(" ");
@@ -25,9 +26,10 @@ export default function ContactPage() {
     {
       onSuccess: (res) => {
         setRes(true);
-        console.log(res);
+        toast("Form Submitted! We will get back to you soon!");
       },
       onError: (err) => {
+        toast("Something went wrong, check your form and try again.");
         console.log(err);
         setErrorState(true);
       },
