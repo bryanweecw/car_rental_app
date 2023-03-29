@@ -14,6 +14,7 @@ import Navbar from "~/layout/navbar";
 import StaffTabContextWrapper from "~/context/StaffTabContext";
 import ClientTabContextWrapper from "~/context/ClientTabContext";
 import { Analytics } from "@vercel/analytics/react";
+import AppUrlListener from "~/components/AppUrlListener";
 
 function MyApp({
   Component,
@@ -25,6 +26,7 @@ function MyApp({
       supabaseClient={supabase}
       initialSession={pageProps.initialSession}
     >
+      <AppUrlListener></AppUrlListener>
       <ClientTabContextWrapper>
         <StaffTabContextWrapper>
           <Navbar />
