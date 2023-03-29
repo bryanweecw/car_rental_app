@@ -411,6 +411,7 @@ export default function Car(
           <button
             type="button"
             onClick={(e) => {
+              void postQuery.refetch();
               e.preventDefault();
               void notify();
             }}

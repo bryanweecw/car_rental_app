@@ -50,6 +50,10 @@ const ResultPage: NextPage = () => {
       onSuccess: (res) => {
         if (res != undefined) {
           toast("Hire Agreement Creation Successful");
+        } else {
+          toast(
+            "Hire Agreement Creation Failed. Please try again, or contact support."
+          );
         }
         console.log(res);
         // // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -155,7 +159,7 @@ const ResultPage: NextPage = () => {
     );
   }
   void router.push("/account?tab=hire_agreements");
-  return <>Yay</>;
+  return <></>;
 };
 
 export default ResultPage;

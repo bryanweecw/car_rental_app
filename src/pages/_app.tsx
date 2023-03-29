@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "~/layout/navbar";
 import StaffTabContextWrapper from "~/context/StaffTabContext";
 import ClientTabContextWrapper from "~/context/ClientTabContext";
+import { Analytics } from "@vercel/analytics/react";
 
 function MyApp({
   Component,
@@ -28,6 +29,7 @@ function MyApp({
         <StaffTabContextWrapper>
           <Navbar />
           <Component {...pageProps} />
+          <Analytics />
           <ToastContainer
             position="top-center"
             autoClose={2000}

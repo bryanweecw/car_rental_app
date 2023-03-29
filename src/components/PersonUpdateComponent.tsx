@@ -62,53 +62,8 @@ export default function PersonUpdateComponent({
 
   return (
     <>
-      <div className="grid">
-        <div className="mx-auto mt-8 place-self-center rounded-2xl border-2 bg-white p-10 drop-shadow-lg md:w-2/5 custxs:w-4/5 custsm:w-4/5 custmd:w-3/5">
-          {/* <Link href="/" className="relative w-1/5  font-light text-gray-400">
-        <button
-          type="button"
-          className="mb-2 flex items-center rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-        >
-          <svg width="24" height="24" viewBox="0 0 16 16">
-            <path
-              d="M9 4 L5 8 L9 12"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-            />
-          </svg>
-          Back
-        </button>
-      </Link> */}
+        <div className="mx-auto mt-8 rounded-2xl border-2 bg-white p-10 drop-shadow-lg md:w-2/5 custxs:w-4/5 custsm:w-4/5 custmd:w-3/5">
           <div className="flex flex-col items-center justify-center">
-            {/* <span className="relative inline-block justify-center">
-              <img
-                className="mx-auto h-auto w-48 rounded-full border-2 text-center md:h-56 md:w-56"
-                src={
-                  personInfo?.avatar_url
-                    ? personInfo?.avatar_url
-                    : "https://avataaars.io/?avatarStyle=Circle&topType=WinterHat3&accessoriesType=Prescription01&hatColor=Red&facialHairType=MoustacheMagnum&facialHairColor=BrownDark&clotheType=BlazerSweater&eyeType=Cry&eyebrowType=DefaultNatural&mouthType=Tongue&skinColor=Tanned"
-                }
-                alt="Person Avatar"
-              />
-              <label
-                htmlFor="dropzone-file"
-                className="absolute bottom-0 right-0 mx-auto flex h-48 w-48 items-center justify-center rounded-full bg-gray-700 text-white opacity-70 ring-1 ring-white hover:opacity-70 md:h-56 md:w-56"
-              >
-                 Change Avatar 
-            <input
-                  id="dropzone-file"
-                  type="file"
-                  className="hidden"
-                  onChange={() => {
-                    console.log("Updated Photo");
-                  }}
-                />
-                
-              </label>
-            </span> */}
             <Avatar
               uid={personInfo?.user_uid ?? ""}
               url={personInfo?.avatar_url ?? ""}
@@ -338,7 +293,6 @@ export default function PersonUpdateComponent({
             </button>
           </div>
         </div>
-      </div>
     </>
   );
 }
