@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.smilesrental.app",
+      "sha256_cert_fingerprints": [
+        "2F:37:1D:64:33:40:4C:76:F0:A3:87:AE:5B:35:91:1F:0B:C3:BA:8A:7A:09:33:1B:67:10:1D:D5:08:5C:CD:FC"
+      ]
+    }
+  }
+]
