@@ -14,6 +14,7 @@ import Navbar from "~/layout/navbar";
 import StaffTabContextWrapper from "~/context/StaffTabContext";
 import ClientTabContextWrapper from "~/context/ClientTabContext";
 import { Analytics } from "@vercel/analytics/react";
+import Head from "next/head";
 
 function MyApp({
   Component,
@@ -27,6 +28,11 @@ function MyApp({
     >
       <ClientTabContextWrapper>
         <StaffTabContextWrapper>
+          <Head>
+            <title>SMILES Car Rental</title>
+            <meta name="description" content="Rent Cars with a Smile" />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
           <Navbar />
           <Component {...pageProps} />
           <Analytics />
