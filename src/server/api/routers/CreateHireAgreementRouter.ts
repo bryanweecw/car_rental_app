@@ -2,6 +2,7 @@ import { randomInt } from "crypto";
 import { z } from "zod";
 import { supabaseClient } from "../../sharedinstance";
 import { createTRPCRouter, publicProcedure } from "../trpc";
+import { v4 as uuidv4 } from "uuid";
 
 const HireAgreementCreationDataSchema = z.object({
   amount: z.number(),
