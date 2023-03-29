@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "88PG495UUC.com.smilesrental.app",
+        "paths": [
+          "*"
+        ]
+      }
+    ]
+  }
+}
