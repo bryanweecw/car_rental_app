@@ -69,6 +69,7 @@ export default function StaffHireAgreementView({
     api.hireAgreementUpdateMutation.HireAgreementUpdate.useMutation({
       onSuccess: (res) => {
         onAgreementChange();
+        toast("Hire Agreement updated successfully");
       },
       onError: (err) => {
         toast("Failed to update Hire Agreement");
