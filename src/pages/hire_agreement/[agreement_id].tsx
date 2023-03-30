@@ -65,6 +65,8 @@ export default function Agreement() {
         .select("isstaff")
         .eq("user_uid", id);
       const isStaffLocal = Boolean(profile_info?.[0]?.isstaff);
+      console.log(isStaffLocal);
+
       if (!isStaffLocal) {
         setIsStaff(false);
         // if the user is not staff, redirect them to the home page
@@ -83,11 +85,11 @@ export default function Agreement() {
     if (!isLoading && !session) {
       if (!session) {
         void router.push("/");
-      } else {
-        // if the user is logged in, or if we don't know if they are logged in
-        // because it is still loading check if they are staff
-        void checkIfStaff();
       }
+    } else {
+      // if the user is logged in, or if we don't know if they are logged in
+      // because it is still loading check if they are staff
+      void checkIfStaff();
     }
   }, [session, isLoading, supabase, router, checkIfStaff]);
 
